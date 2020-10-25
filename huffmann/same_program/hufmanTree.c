@@ -154,7 +154,7 @@ void showAttributeList(u32 characterCount, ATTRIBUTE *attributeList) {
 	u32 i;
 
 	for (i = 0; i < characterCount; i++) {
-		printf("频度:%d 符号:%c\n", attributeList[i].frequency, attributeList[i].character);
+		printf("freq:%d character:%c\n", attributeList[i].frequency, attributeList[i].character);
 	}
 }
 
