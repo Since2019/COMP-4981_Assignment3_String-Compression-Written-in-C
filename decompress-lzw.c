@@ -6,7 +6,7 @@
 #define NOT_EXIST -1
 #define START_WITH_HASH_TAG 1
 
-#define TEST_EXISTANCE 1
+#define TEST_EXISTENCE 1
 
 
 typedef struct {
@@ -93,8 +93,8 @@ int get_seq_code(Dictionary *dict,char* seq){
  *  @param dict: dictionary
  *  @param seq : compares if the seq are the same or not.
  */
-uint8_t* get_code_seq(Dictionary *dict,int seq){
-    //err handling 
+uint8_t* get_code_seq(Dictionary *dict,int code){
+    //err handling
     if(code < 0 || code >= dict->size) {
         return NULL;
     }
@@ -135,14 +135,14 @@ void lzw_encode(uint8_t* text, Dictionary* dict){
 }
 
 
-void lzw_decode(int codes[], int n,Dictionary* dict){
+void lzw_decode(uint8_t codes[], int n,Dictionary* dict){
     int code;
     char prev[1000];
     char* output;
 
     code = codes[0];
     output = get_code_seq(dict,code);
-    printf("%s\n", output);
+    printf("%s", output);
 
     int i;
     for(i = 1; i < n; i ++){
@@ -150,10 +150,10 @@ void lzw_decode(int codes[], int n,Dictionary* dict){
         strcpy(prev,output);
         output = get_code_seq(dict, code);
         sprintf(prev,"%s%c",prev,output[0]);
-        
+
         insert_seq(dict,prev);
 
-        printf("%s\n",output);
+        printf("%s",output);
     }
 
 }
@@ -161,20 +161,19 @@ void lzw_decode(int codes[], int n,Dictionary* dict){
 
 int main(){
 
-    
+
     Dictionary dict;
     init_dictionary(&dict,1000);
     print_dictionary(&dict);
 
-    #ifdef TEST_EXISTANCE
-    //Checks if "B" exists.
-    printf("%d\n",get_seq_code(&dict,"B"));
-    #endif
+//    #ifdef TEST_EXISTANCE
+//    //Checks if "B" exists.
+//    printf("%d\n",get_seq_code(&dict,"B"));
+//    #endif
 
-    lzw_encode("TOBEORNOTTOBEORTOBEORNOT",&dict);
+//    lzw_encode("TOBEORNOTTOBEORTOBEORNOT",&dict);
 
-    // uint8_t array[16] = {}
-    lzw_encode("TOBEORNOTTOBEORTOBEORNOT",&dict);
-
+    uint8_t arr[16] = {20,15,2,5,15,18,14,15,20,27,29,31,36,30,32,34};
+    lzw_decode(arr,16,&dict);
     return 0;
 }
