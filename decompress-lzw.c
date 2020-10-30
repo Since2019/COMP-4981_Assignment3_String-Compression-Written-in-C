@@ -89,6 +89,23 @@ int get_seq_code(Dictionary *dict,char* seq){
 
 }
 
+/**
+ *  @param dict: dictionary
+ *  @param seq : compares if the seq are the same or not.
+ */
+uint8_t* get_code_seq(Dictionary *dict,int seq){
+    //err handling 
+    if(code < 0 || code >= dict->size) {
+        return NULL;
+    }
+    else{
+        int i = code;
+        return dict->seq[i];
+    }
+}
+
+
+
 
 void lzw_encode(uint8_t* text, Dictionary* dict){
     // Wonder how to make this dynamic
@@ -117,6 +134,31 @@ void lzw_encode(uint8_t* text, Dictionary* dict){
 
 }
 
+
+void lzw_decode(int codes[], int n,Dictionary* dict){
+    int code;
+    char prev[1000];
+    char* output;
+
+    code = codes[0];
+    output = get_code_seq(dict,code);
+    printf("%s\n", output);
+
+    int i;
+    for(i = 1; i < n; i ++){
+        code = codes[i];
+        strcpy(prev,output);
+        output = get_code_seq(dict, code);
+        sprintf(prev,"%s%c",prev,output[0]);
+        
+        insert_seq(dict,prev);
+
+        printf("%s\n",output);
+    }
+
+}
+
+
 int main(){
 
     
@@ -129,6 +171,9 @@ int main(){
     printf("%d\n",get_seq_code(&dict,"B"));
     #endif
 
+    lzw_encode("TOBEORNOTTOBEORTOBEORNOT",&dict);
+
+    // uint8_t array[16] = {}
     lzw_encode("TOBEORNOTTOBEORTOBEORNOT",&dict);
 
     return 0;
