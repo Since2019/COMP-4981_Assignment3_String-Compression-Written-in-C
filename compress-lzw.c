@@ -1,3 +1,5 @@
+#include <unistd.h>
+#include <fcntl.h> 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,7 +8,7 @@
 #define NOT_EXIST -1
 #define START_WITH_HASH_TAG 1
 
-#define TEST_EXISTANCE 1
+// #define PRINT_OUT_DICTIONARY 1
 
 
 typedef struct {
@@ -112,24 +114,78 @@ void lzw_encode(uint8_t* text, Dictionary* dict){
         code = get_seq_code(dict,current);
         sprintf(current,"%s%c",current,next);
         insert_seq(dict,current);
-        printf("%d %s\n",code,current);
+        // printf("%d %s\n",code,current);
+        printf("%d",code);
     }
 
 }
 
-int main(){
+/** 
+  * @param argc : argument count
+  * @param argv : argument vector
+  */
+void parse_args(int argc,char* argv[]){
+    // If no arg is passed to the program
+    int arg_count = 1;
 
+    while(arg_count < argc && strcmp(argv[arg_count],">") != 0){
+        
+        fprintf(stderr, "checking args at %d with %s\n", arg_count, argv[arg_count]);
+        if(strstr(argv[arg_count], ".txt") != NULL)
+        {
+            
+            int fd = open(argv[arg_count], O_RDONLY);
+            dup2(fd, STDIN_FILENO);
+            // close(fd);
+        }
+
+        if(strcmp(argv[arg_count], ">") == 0)
+        {
+            fprintf(stderr, "if file was defined, please use a txt file\n");
+        }
+        arg_count++;
+    }
+}
+
+
+int main(int argc, char* argv[]){
+
+    parse_args(argc,argv);
     
+    // int fdw = dup2(fdw,STDOUT_FIFENO);
+
+
+
     Dictionary dict;
     init_dictionary(&dict,1000);
-    print_dictionary(&dict);
+    
 
-    #ifdef TEST_EXISTANCE
-    //Checks if "B" exists.
-    printf("%d\n",get_seq_code(&dict,"B"));
+    #ifdef PRINT_OUT_DICTIONARY
+        print_dictionary(&dict);
     #endif
 
-    lzw_encode("TOBEORNOTTOBEORTOBEORNOT",&dict);
+    
+    uint8_t* buffer;
+    uint8_t* file_content = malloc(sizeof(uint8_t)*10000);
+    size_t index = 0;
+    size_t ret;
+    while(1){
+        ret = read(STDIN_FILENO,buffer,1);
+        if(ret == 0)
+            break;
+        // printf("%c",buffer[0]);
+        file_content[index] = (uint8_t)buffer[0];
+        ++index;
+    }
+    file_content[index]='\0';
+    
+    // printf("%s",file_content);
+    lzw_encode(file_content,&dict);
+    
+
+
+
+    // lzw_encode("TOBEORNOTTOBEORTOBEORNOT",&dict);
 
     return 0;
 }
