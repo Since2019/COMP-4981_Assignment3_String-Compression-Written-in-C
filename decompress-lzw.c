@@ -189,33 +189,61 @@ void lzw_decode(int codes[], int n,Dictionary* dict){
 
 /**
   * @param file_content : the content of the file is read into a very large buffer
+  * returns the size of the the array
   */
-int* read_codes(uint8_t* file_content){
+  int read_codes(int* code_array){
     uint8_t* buffer;
     int code_buffer;
     size_t index = 0;
     size_t ret;
 
-    int* code_array;
+    code_array;
 
-    // read 12 bits per time.
+    
     while(1){
-        file_content = realloc(file_content, sizeof(uint8_t)*(sizeof(file_content) + 12));
+        code_buffer = realloc(file_content, sizeof(int)*(sizeof(code_buffer) + 1));
+
+        // read 12 bits per time.
         ret = read(STDIN_FILENO,buffer,12);
         if(ret == 0)
             break;
-        // printf("%c",buffer[0]);
-        file_content[index] = (uint8_t)buffer[0];
-        ++index;
 
-        binToInt(file_content);
+        // converts the buffer into int
+        code_array[index] = binToInt(buffer);
+        ++index;
+        
     }
     // The buffer ends.
-    file_content[index]='\0';
+    code_array[index]='\0';
 
-
-    return code_array;
+    return index;
 }
+// int* read_codes(uint8_t* file_content){
+//     uint8_t* buffer;
+//     int code_buffer;
+//     size_t index = 0;
+//     size_t ret;
+
+//     int* code_array;
+
+//     // read 12 bits per time.
+//     while(1){
+//         file_content = realloc(file_content, sizeof(uint8_t)*(sizeof(file_content) + 12));
+//         ret = read(STDIN_FILENO,buffer,12);
+//         if(ret == 0)
+//             break;
+//         // printf("%c",buffer[0]);
+//         file_content[index] = (uint8_t)buffer[0];
+//         ++index;
+
+//         code_array[index] = binToInt(buffer);
+//     }
+//     // The buffer ends.
+//     file_content[index]='\0';
+
+
+//     return code_array;
+// }
 
 
 int main(){
@@ -224,11 +252,14 @@ int main(){
     uint8_t* file_content = malloc(sizeof(uint8_t)*13);
 
 
-    int* code_array = read_codes(file_content);
+    int* code_array = malloc(sizeof(int)*13);
+
+    int num_of_codes = read_codes();
 
     Dictionary dict;
+
     init_dictionary(&dict,1000);
-    print_dictionary(&dict);
+    // print_dictionary(&dict);
     
 //    #ifdef TEST_EXISTANCE
 //    //Checks if "B" exists.
@@ -237,7 +268,7 @@ int main(){
 
 //    lzw_encode("TOBEORNOTTOBEORTOBEORNOT",&dict);
 
-    int arr[16] = {20,15,2,5,15,18,14,15,20,27,29,31,36,30,32,34};
-    lzw_decode(arr,16,&dict);
+    
+    lzw_decode(code_array,num_of_codes,&dict);
     return 0;
 }
