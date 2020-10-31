@@ -155,6 +155,7 @@ void lzw_encode(uint8_t* text, Dictionary* dict){
         uint8_t* code_buffer; 
         decimalToBinary(code,code_buffer,CODE_BITS);
         printf("%s",code_buffer);
+        
 
     }
 

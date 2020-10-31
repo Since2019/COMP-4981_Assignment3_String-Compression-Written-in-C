@@ -9,6 +9,32 @@
 #define TEST_EXISTENCE 1
 
 
+/**
+ *  converts the binary uint8_t array into 
+ *  an 8-bit unsigned integer
+ */
+int binToInt( uint8_t* binstr ) 
+{          
+    int result = 0 ;
+    int bit = 0; 
+    while( binstr[bit] != '\0' )
+    {
+        if( binstr[bit] == '1' )
+        {
+            result |= 1 ;
+        }
+
+        bit++ ;
+        if( binstr[bit] != '\0' )
+        {
+            result <<= 1 ;
+        }
+    }
+
+    return result ;
+}          
+
+
 typedef struct {
     //string array stores the strings
     //that is added to the dictionary
@@ -134,8 +160,11 @@ void lzw_encode(uint8_t* text, Dictionary* dict){
 
 }
 
-
-void lzw_decode(uint8_t codes[], int n,Dictionary* dict){
+/**
+  * @param codes : codes
+  * @param Dictionary* dict
+  */
+void lzw_decode(int codes[], int n,Dictionary* dict){
     int code;
     char prev[1000];
     char* output;
@@ -158,14 +187,49 @@ void lzw_decode(uint8_t codes[], int n,Dictionary* dict){
 
 }
 
+/**
+  * @param file_content : the content of the file is read into a very large buffer
+  */
+int* read_codes(uint8_t* file_content){
+    uint8_t* buffer;
+    int code_buffer;
+    size_t index = 0;
+    size_t ret;
+
+    int* code_array;
+
+    // read 12 bits per time.
+    while(1){
+        file_content = realloc(file_content, sizeof(uint8_t)*(sizeof(file_content) + 12));
+        ret = read(STDIN_FILENO,buffer,12);
+        if(ret == 0)
+            break;
+        // printf("%c",buffer[0]);
+        file_content[index] = (uint8_t)buffer[0];
+        ++index;
+
+        binToInt(file_content);
+    }
+    // The buffer ends.
+    file_content[index]='\0';
+
+
+    return code_array;
+}
+
 
 int main(){
 
+    //File content ( char array ) 
+    uint8_t* file_content = malloc(sizeof(uint8_t)*13);
+
+
+    int* code_array = read_codes(file_content);
 
     Dictionary dict;
     init_dictionary(&dict,1000);
     print_dictionary(&dict);
-
+    
 //    #ifdef TEST_EXISTANCE
 //    //Checks if "B" exists.
 //    printf("%d\n",get_seq_code(&dict,"B"));
@@ -173,7 +237,7 @@ int main(){
 
 //    lzw_encode("TOBEORNOTTOBEORTOBEORNOT",&dict);
 
-    uint8_t arr[16] = {20,15,2,5,15,18,14,15,20,27,29,31,36,30,32,34};
+    int arr[16] = {20,15,2,5,15,18,14,15,20,27,29,31,36,30,32,34};
     lzw_decode(arr,16,&dict);
     return 0;
 }
