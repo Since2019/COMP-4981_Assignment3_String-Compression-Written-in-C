@@ -5,10 +5,42 @@
 #include <string.h>
 #include <inttypes.h>
 
+#define CODE_BITS 12
+
 #define NOT_EXIST -1
 #define START_WITH_HASH_TAG 1
 
 // #define PRINT_OUT_DICTIONARY 1
+
+
+
+
+// ============================HELPER FUNCTIONS=============================
+
+/**
+ * @param decimal_num : the number you want to convert into binary
+ * @param bin_12_bits : uint8_t pointer, stores 12bits of binary number.
+ */
+void decimalToBinary(int decimal_num, uint8_t *bin_n_bits,size_t number_of_bits)
+{
+    int c, tmp;
+
+    // bit shifting and do the conversion.
+    for (c = number_of_bits - 1  ; c >= 0; c--)
+    {
+        tmp = decimal_num >> c;
+
+        if (tmp & 1)
+            bin_n_bits[number_of_bits - c - 1 ] = '1';
+        else
+            bin_n_bits[number_of_bits - c - 1 ] = '0';
+    }
+    bin_n_bits[number_of_bits] = '\0';
+}
+
+
+
+
 
 
 typedef struct {
@@ -115,7 +147,15 @@ void lzw_encode(uint8_t* text, Dictionary* dict){
         sprintf(current,"%s%c",current,next);
         insert_seq(dict,current);
         // printf("%d %s\n",code,current);
-        printf("%d",code);
+        
+        //// original code(in decimal)
+        //printf("%d",code);
+
+        //code in binary
+        uint8_t* code_buffer; 
+        decimalToBinary(code,code_buffer,CODE_BITS);
+        printf("%s",code_buffer);
+
     }
 
 }
@@ -146,6 +186,13 @@ void parse_args(int argc,char* argv[]){
         arg_count++;
     }
 }
+
+
+
+
+
+
+
 
 
 int main(int argc, char* argv[]){
