@@ -1,3 +1,5 @@
+#include <unistd.h>
+#include <fcntl.h> 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -192,16 +194,17 @@ void lzw_decode(int codes[], int n,Dictionary* dict){
   * returns the size of the the array
   */
   int read_codes(int* code_array){
-    uint8_t* buffer;
-    int code_buffer;
-    size_t index = 0;
-    size_t ret;
+     
+    uint8_t* buffer = malloc(sizeof(uint8_t)*12); //each 12 bit code  
 
-    code_array;
+    size_t index = 0; //keep track of how many code words are there
+    size_t ret;       //see if the read() has reach its end. 
+
 
     
     while(1){
-        code_buffer = realloc(file_content, sizeof(int)*(sizeof(code_buffer) + 1));
+        // code_array = (int*) realloc(code_array, (sizeof(code_array) + sizeof(int)*1) );
+         code_array = (int*) realloc(code_array, index*12 + 1 );
 
         // read 12 bits per time.
         ret = read(STDIN_FILENO,buffer,12);
@@ -211,6 +214,7 @@ void lzw_decode(int codes[], int n,Dictionary* dict){
         // converts the buffer into int
         code_array[index] = binToInt(buffer);
         ++index;
+        // printf("%d",binToInt(buffer));
         
     }
     // The buffer ends.
@@ -252,9 +256,9 @@ int main(){
     uint8_t* file_content = malloc(sizeof(uint8_t)*13);
 
 
-    int* code_array = malloc(sizeof(int)*13);
+    int* code_array = malloc(sizeof(int)*10000);
 
-    int num_of_codes = read_codes();
+    int num_of_codes = read_codes(code_array);
 
     Dictionary dict;
 
@@ -266,9 +270,10 @@ int main(){
 //    printf("%d\n",get_seq_code(&dict,"B"));
 //    #endif
 
-//    lzw_encode("TOBEORNOTTOBEORTOBEORNOT",&dict);
 
     
     lzw_decode(code_array,num_of_codes,&dict);
+
+
     return 0;
 }
