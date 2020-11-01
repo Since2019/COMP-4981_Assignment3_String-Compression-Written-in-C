@@ -2,7 +2,6 @@
 #include <string.h>
 #include <malloc.h>
 
-#include "tyz.h"
 #include "hufmanTree.h"
 
 /**
