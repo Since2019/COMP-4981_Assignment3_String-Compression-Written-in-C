@@ -22,23 +22,6 @@
  */
 void twelve_bits_output(uint16_t twelve_bits_array){
 
-    // opens the file output descriptor
-    int filedesc = open(STDOUT_FILENO, O_WRONLY | O_APPEND);
-    
-    // // This one will be the return value of the func
-    // uint8_t* twelve_bits_array = malloc(sizeof(uint8_t)*2);
-    
-    uint16_t twelve_bit_tmp;
-
-    uint8_t eight_bit_tmp;
-
-    size_t index = 0;
-
-
-    for(; twelve_bit_tmp != 0 ; twelve_bit_tmp >>= 1, eight_bit_tmp >>= 1) {
-
-    }
-
 
     /**
      * 
@@ -55,10 +38,59 @@ void twelve_bits_output(uint16_t twelve_bits_array){
      *   mask:               100000000000 
      *  8bits:              10000000
      * 
-     *  shift 2:
-     *  12bits:            101001100101
+     *  shift 4:
+     *  12bits:          101001100101
      *   mask:               100000000000 
-     *  8bits:             10000000
+     *  8bits:           10100000
+     * 
+     *  shift 5:
+     *  12bits:         101001100101
+     *   mask:               100000000000 
+     *  8bits:          10100100
+
+     *  shift 8:
+     *  12bits:         101001100101
+     *   mask:                 100000000000 
+     *  8bits:          10100110
+     * 
+     *  shift 9:
+     *  12bits:         101001100101
+     *   mask:                 100000000000 
+     * 
+     *  8bits#2:               00000000
+     *  8bits#1:          10100110
+
+     *  shift 12:
+     *  12bits:     101001100101
+     *   mask:                 100000000000 
+     * 
+     *  8bits#2:            01010000
+     *  8bits#1:          10100110
+     * 
+
+     *  shift 13:
+     *  12bits #1:     101001100101
+     *  12bits #2:             100011100001   
+     *   mask:                 100000000000 
+     * 
+     *  8bits#2:           01011000
+     *  8bits#1:          10100110
+     * 
+     * 
+     *  shift 16:
+     *  12bits #1:     101001100101
+     *  12bits #2:         100111100001   
+     *   mask:                 100000000000 
+     * 
+     *  8bits#2:       01011001
+     *  8bits#1:          10100110
+     * 
+     * if(8 bits is filled)
+     *    move to the next 8 bits!
+     * else if(12 bits becomes 0)
+     *    move to the next 12 bits!
+     * else 
+     *    fill the last parts of 8bits with 0s !!!!!!
      * --------------------------------------------
      * 
      * 
@@ -78,7 +110,7 @@ void twelve_bits_output(uint16_t twelve_bits_array){
      * 12bits:                  101001100101
      * 12bits_tmp shift 2       0101--------
      *           (do the masking:)
-     * 8bits:                   0101--------
+     * 8bits:                   0101----
      * 
      * 
      * 
@@ -93,11 +125,36 @@ void twelve_bits_output(uint16_t twelve_bits_array){
     */
 
 
+
+    // opens the file output descriptor
+    int filedesc = open(STDOUT_FILENO, O_WRONLY | O_APPEND);
+    
+    // // This one will be the return value of the func
+    // uint8_t* twelve_bits_array = malloc(sizeof(uint8_t)*2);
+    
+    uint16_t twelve_bit_from_read;
+
+    uint16_t twelve_bit_tmp;
+
+    uint8_t eight_bit_tmp;
+
+    size_t index = 0;
+
+
+    for(; twelve_bit_tmp != 0 ; twelve_bit_tmp >>= 1, eight_bit_tmp >>= 1) {
+
+    }
+
     // now take a twelve bit variable, shift it to the right and copy each bit
     // into a uint_8, until the uint_8 is done OR the twelve bit is done!
-    while(twelve_bit_tmp != 0){
-        twelve_bit_tmp
+    
+    int step = 1;
+
+    if(step == 1) {
+        twelve_bit_tmp = twelve_bit_from_read >> 8;
+        
     }
+   
 
     while(1){
         // If it can't write anymore, it breaks.
