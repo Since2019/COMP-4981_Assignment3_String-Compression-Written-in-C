@@ -1,0 +1,5 @@
+freq:1 character:%
+freq:5 character:2
+freq:5 character:A
+freq:1 character:F
+000001111111111100101

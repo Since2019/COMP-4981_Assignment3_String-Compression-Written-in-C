@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <string.h>
-#include <malloc.h>
-
+// #include <malloc.h>
+#include <unistd.h>
+#include <fcntl.h> 
 #include "hufmanTree.h"
-
+#include <stdlib.h>
 
 
 
@@ -101,14 +102,14 @@ void creatHufmanTree(uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) 
 void showHufmanTreeNode(uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
 	uint32_t i;
 
-	printf("char  freq  Lch  Rch  code\n");
+	fprintf(stderr,"char  freq  Lch  Rch  code\n");
 	for (i = 0; i < characterCount; i++) {
-		printf("%-5c %-5d %-7d %-7d %-10s\n", 
+		fprintf(stderr,"%-5c %-5d %-7d %-7d %-10s\n", 
 			hufmanTreeNode[i].attribute.character,
 			hufmanTreeNode[i].attribute.frequency,
 			hufmanTreeNode[i].leftChild,
 			hufmanTreeNode[i].rightChild,
-			hufmanTreeNode[i].hufmanCode == NULL ? "NULL" : hufmanTreeNode[i].hufmanCode);
+			hufmanTreeNode[i].hufmanCode == NULL ? "NULL" : (char*) hufmanTreeNode[i].hufmanCode);
 	}
 }
 
@@ -166,8 +167,12 @@ ATTRIBUTE *initAttributeList(uint8_t *str, uint32_t *ascii, uint32_t *characterC
 	ATTRIBUTE *attributeList;
 
 	for (i = 0; str[i]; i++) {
+		
 		ascii[str[i]]++;
 	}
+
+	
+
 	for (i = 0; i < 256; i++) {
 		count += (ascii[i] != 0); 
 	}
@@ -183,8 +188,48 @@ ATTRIBUTE *initAttributeList(uint8_t *str, uint32_t *ascii, uint32_t *characterC
 	return attributeList;
 }
 
+
+
+
+
+  int read_input_bytes(uint8_t* byte_content){
+     
+    uint8_t* buffer = malloc(sizeof(uint8_t)*2); //each 12 bit code  
+	
+
+    size_t index = 0; //keep track of how many code words are there
+    size_t ret;       //see if the read() has reach its end. 
+
+
+   
+    while(1){
+		
+        byte_content = (uint8_t*) realloc(byte_content, (index*1 + 3)*sizeof(uint8_t) );
+		
+
+        // read 8 bits(one byte) per time.
+        ret = read(STDIN_FILENO,buffer,1);
+        if(ret == 0)
+            break;
+
+        // put the read stuff into the byte_content.
+        byte_content[index] = buffer[0];
+		// fprintf(stderr,"%c",buffer[0]);
+        ++index;
+        
+    }
+    // The buffer ends.
+    byte_content[index]='\0';
+
+    return index;
+}
+
+
+
+
+
 int main() {
-	uint8_t str[128];
+	// uint8_t str[128];
 	uint8_t code[256];
 	uint8_t *hufCode = NULL;
 
@@ -200,27 +245,48 @@ int main() {
 	// 
 	// 
 	// 
-	printf("Your input, please:\n");
-	fgets(str,128,stdin); //Encoding part
 
-	attributeList = initAttributeList(str, ascii, &characterCount);
+	uint8_t* input_bytes_content = malloc(sizeof(uint8_t)*10);;
+	fprintf(stderr,"Your input, please:\n");
+	// fgets(str,128,stdin); //Encoding part
+	read_input_bytes(input_bytes_content);
+	
+
+	
+
+	
+
+
+
+
+	// attributeList = initAttributeList(str, ascii, &characterCount);
+	attributeList = initAttributeList(input_bytes_content, ascii, &characterCount);
+
+
+	
+
 	showAttributeList(characterCount, attributeList);
 	
 	hufmanTreeNode = initHufmanTreeNode(characterCount, orientate, attributeList);
 	creatHufmanTree(characterCount, hufmanTreeNode);
 	creatHufmanCode(code, 0, 2*characterCount-2, hufmanTreeNode);
 	
-	printf("Hufman Tree Below\n");
+
+	fprintf(stderr,"Hufman Tree Below\n");
 	showHufmanTreeNode(2*characterCount-1, hufmanTreeNode);
 
+    // hufCode = coding(str, orientate, characterCount, hufmanTreeNode); // Encoding:
+	hufCode = coding(input_bytes_content, orientate, characterCount, hufmanTreeNode);
+	
 
-	hufCode = coding(str, orientate, characterCount, hufmanTreeNode); // Encoding:
+	fprintf(stderr,"Hufman Code Below\n");
+	fprintf(stderr,"%s", hufCode);
 
-	printf("Hufman Code Below\n");
+
 	// We later need to change this to outputting in real bits. 
 	//
 	//
-	//
+	//It's printing out to the file..
 	printf("%s", hufCode);
 
 
