@@ -5,7 +5,6 @@
 #include "tyz.h"
 #include "hufmanTree.h"
 
-
 /**
   *	 You pass in an array of huffman Code, the number of characters in the file
   *	 As well as the huffman Treenode struct
@@ -14,8 +13,8 @@
   *  @param hufmanTreeNode
   *
   */
-uin8_t *decoding(uin8_t *hufCode, uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
-	uin8_t *decode = NULL;
+uint8_t *decoding(uint8_t *hufCode, uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
+	uint8_t *decode = NULL;
 	uint32_t i;
 	uint32_t index = 0;
 	uint32_t sum = 0;
@@ -24,7 +23,7 @@ uin8_t *decoding(uin8_t *hufCode, uint32_t characterCount, HUFMAN_TREE_NODE *huf
 	for (i = 0; i < characterCount; i++) {
 		sum += hufmanTreeNode[i].attribute.frequency;
 	}
-	decode = (uin8_t *) calloc(sizeof(uin8_t), sum);
+	decode = (uint8_t *) calloc(sizeof(uint8_t), sum);
 
 	for (i = 0; hufCode[i]; i++) {
 		if ('0' == hufCode[i]) {
@@ -45,7 +44,7 @@ uin8_t *decoding(uin8_t *hufCode, uint32_t characterCount, HUFMAN_TREE_NODE *huf
   * Freee the memory.
   * @param hufCode : the one you want to delete
   */
-void destoryCode(uin8_t *hufCode) {
+void destoryCode(uint8_t *hufCode) {
 	if (NULL == hufCode) {
 		return;
 	}
@@ -56,15 +55,15 @@ void destoryCode(uin8_t *hufCode) {
   *  @param : the string you want to code
   *  @param : u
   */
-uin8_t *coding(uin8_t *str, uint32_t *orientate, uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
-	uin8_t *code = NULL;
+uint8_t *coding(uint8_t *str, uint32_t *orientate, uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
+	uint8_t *code = NULL;
 	uint32_t i;
 	uint32_t sum = 0;
 
 	for (i = 0; i < characterCount; i++) {
 		sum += hufmanTreeNode[i].attribute.frequency * strlen(hufmanTreeNode[i].hufmanCode);
 	}
-	code = (uin8_t *) calloc(sizeof(uin8_t), sum);
+	code = (uint8_t *) calloc(sizeof(uint8_t), sum);
 
 	for (i = 0; str[i]; i++) {
 		strcat(code, hufmanTreeNode[orientate[str[i]]].hufmanCode);
@@ -77,7 +76,7 @@ uin8_t *coding(uin8_t *str, uint32_t *orientate, uint32_t characterCount, HUFMAN
   * @param index : which code it is?
   * @param hufmanTreeNode : Struct
   */
-void creatHufmanCode(uin8_t *code, uint32_t index, uint32_t root, HUFMAN_TREE_NODE *hufmanTreeNode) {
+void creatHufmanCode(uint8_t *code, uint32_t index, uint32_t root, HUFMAN_TREE_NODE *hufmanTreeNode) {
 	if (-1 == hufmanTreeNode[root].leftChild) {
 		code[index] = 0;
 		strcpy(hufmanTreeNode[root].hufmanCode, code);
@@ -169,7 +168,7 @@ HUFMAN_TREE_NODE *initHufmanTreeNode(uint32_t characterCount, uint32_t *orientat
 
 	for (i = 0; i < characterCount; i++) {
 		hufmanTreeNode[i].visited = FALSE;
-		hufmanTreeNode[i].hufmanCode = (uin8_t *) calloc(sizeof(uin8_t), characterCount);
+		hufmanTreeNode[i].hufmanCode = (uint8_t *) calloc(sizeof(uint8_t), characterCount);
 		hufmanTreeNode[i].leftChild = hufmanTreeNode[i].rightChild = -1;
 		hufmanTreeNode[i].attribute = attributeList[i];
 
@@ -193,7 +192,7 @@ void destoryAttributeList(ATTRIBUTE *attributeList) {
 	free(attributeList);
 }
 
-ATTRIBUTE *initAttributeList(uin8_t *str, uint32_t *ascii, uint32_t *characterCount) {
+ATTRIBUTE *initAttributeList(uint8_t *str, uint32_t *ascii, uint32_t *characterCount) {
 	uint32_t i;
 	uint32_t index = 0;
 	uint32_t count = 0;
@@ -210,7 +209,7 @@ ATTRIBUTE *initAttributeList(uin8_t *str, uint32_t *ascii, uint32_t *characterCo
 	attributeList = (ATTRIBUTE *) calloc(sizeof(ATTRIBUTE), count);
 	for (i = 0; i < 256; i++) {
 		if (ascii[i] != 0) {
-			attributeList[index].character = (uin8_t) i;
+			attributeList[index].character = (uint8_t) i;
 			attributeList[index++].frequency = ascii[i];
 		}
 	}
@@ -218,10 +217,10 @@ ATTRIBUTE *initAttributeList(uin8_t *str, uint32_t *ascii, uint32_t *characterCo
 }
 
 int main() {
-	uin8_t str[128];
-	uin8_t code[256];
-	uin8_t *hufCode = NULL;
-	uin8_t *decode = NULL;
+	uint8_t str[128];
+	uint8_t code[256];
+	uint8_t *hufCode = NULL;
+	uint8_t *decode = NULL;
 	uint32_t ascii[256] = {0};
 	uint32_t orientate[256] = {0};
 	uint32_t characterCount;
@@ -263,7 +262,7 @@ int main() {
 	// 
 	// 
 	decode = decoding(hufCode, characterCount, hufmanTreeNode);
-	
+		
 	printf("Hufman Decode Below\n");
 	printf("%s\n", decode);
 
