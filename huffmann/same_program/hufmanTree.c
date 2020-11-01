@@ -5,17 +5,23 @@
 #include "tyz.h"
 #include "hufmanTree.h"
 
-u8 *decoding(u8 *hufCode, u32 characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
-	u8 *decode = NULL;
-	u32 i;
-	u32 index = 0;
-	u32 sum = 0;
-	u32 father = 2 * characterCount - 2;
+
+/**
+  *  @param hufCode : 
+  *  @param characterCount
+  *  @param hufmanTreeNode
+  */
+uin8_t *decoding(uin8_t *hufCode, uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
+	uin8_t *decode = NULL;
+	uint32_t i;
+	uint32_t index = 0;
+	uint32_t sum = 0;
+	uint32_t father = 2 * characterCount - 2;
 
 	for (i = 0; i < characterCount; i++) {
 		sum += hufmanTreeNode[i].attribute.frequency;
 	}
-	decode = (u8 *) calloc(sizeof(u8), sum);
+	decode = (uin8_t *) calloc(sizeof(uin8_t), sum);
 
 	for (i = 0; hufCode[i]; i++) {
 		if ('0' == hufCode[i]) {
@@ -32,22 +38,26 @@ u8 *decoding(u8 *hufCode, u32 characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) 
 	return decode;
 }
 
-void destoryCode(u8 *hufCode) {
+void destoryCode(uin8_t *hufCode) {
 	if (NULL == hufCode) {
 		return;
 	}
 	free(hufCode);
 }
 
-u8 *coding(u8 *str, u32 *orientate, u32 characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
-	u8 *code = NULL;
-	u32 i;
-	u32 sum = 0;
+/**
+  *  @param : the string you want to code
+  *  @param : u
+  */
+uin8_t *coding(uin8_t *str, uint32_t *orientate, uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
+	uin8_t *code = NULL;
+	uint32_t i;
+	uint32_t sum = 0;
 
 	for (i = 0; i < characterCount; i++) {
 		sum += hufmanTreeNode[i].attribute.frequency * strlen(hufmanTreeNode[i].hufmanCode);
 	}
-	code = (u8 *) calloc(sizeof(u8), sum);
+	code = (uin8_t *) calloc(sizeof(uin8_t), sum);
 
 	for (i = 0; str[i]; i++) {
 		strcat(code, hufmanTreeNode[orientate[str[i]]].hufmanCode);
@@ -55,7 +65,7 @@ u8 *coding(u8 *str, u32 *orientate, u32 characterCount, HUFMAN_TREE_NODE *hufman
 	return code;
 }
 
-void creatHufmanCode(u8 *code, u32 index, u32 root, HUFMAN_TREE_NODE *hufmanTreeNode) {
+void creatHufmanCode(uin8_t *code, uint32_t index, uint32_t root, HUFMAN_TREE_NODE *hufmanTreeNode) {
 	if (-1 == hufmanTreeNode[root].leftChild) {
 		code[index] = 0;
 		strcpy(hufmanTreeNode[root].hufmanCode, code);
@@ -68,9 +78,9 @@ void creatHufmanCode(u8 *code, u32 index, u32 root, HUFMAN_TREE_NODE *hufmanTree
 	}
 }
 
-u32 searchMinimumNode(u32 count, HUFMAN_TREE_NODE *hufmanTreeNode) {
-	u32 i;
-	u32 minIndex = -1;
+uint32_t searchMinimumNode(uint32_t count, HUFMAN_TREE_NODE *hufmanTreeNode) {
+	uint32_t i;
+	uint32_t minIndex = -1;
 
 	for (i = 0; i < count; i++) {
 		if (FALSE == hufmanTreeNode[i].visited 
@@ -84,11 +94,11 @@ u32 searchMinimumNode(u32 count, HUFMAN_TREE_NODE *hufmanTreeNode) {
 	return minIndex;
 }
 
-void creatHufmanTree(u32 characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
-	u32 i;
-	u32 leftChild;
-	u32 rightChild;
-	u32 count = characterCount;
+void creatHufmanTree(uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
+	uint32_t i;
+	uint32_t leftChild;
+	uint32_t rightChild;
+	uint32_t count = characterCount;
 
 	for (i = 0; i < count - 1; i++) {
 		leftChild = searchMinimumNode(count+i, hufmanTreeNode);
@@ -104,8 +114,8 @@ void creatHufmanTree(u32 characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
 	}
 }
 
-void showHufmanTreeNode(u32 characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
-	u32 i;
+void showHufmanTreeNode(uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
+	uint32_t i;
 
 	printf("char  freq  Lch  Rch  code\n");
 	for (i = 0; i < characterCount; i++) {
@@ -118,8 +128,8 @@ void showHufmanTreeNode(u32 characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
 	}
 }
 
-void destoryHufmanTreeNode(u32 count, HUFMAN_TREE_NODE *hufmanTreeNode) {
-	u32 i;
+void destoryHufmanTreeNode(uint32_t count, HUFMAN_TREE_NODE *hufmanTreeNode) {
+	uint32_t i;
 
 	if (NULL == hufmanTreeNode) {
 		return;
@@ -130,9 +140,9 @@ void destoryHufmanTreeNode(u32 count, HUFMAN_TREE_NODE *hufmanTreeNode) {
 	free(hufmanTreeNode);
 }
 
-HUFMAN_TREE_NODE *initHufmanTreeNode(u32 characterCount, u32 *orientate, ATTRIBUTE *attributeList) {
-	u32 i;
-	u32 nodeCount;
+HUFMAN_TREE_NODE *initHufmanTreeNode(uint32_t characterCount, uint32_t *orientate, ATTRIBUTE *attributeList) {
+	uint32_t i;
+	uint32_t nodeCount;
 	HUFMAN_TREE_NODE *hufmanTreeNode;
 
 	nodeCount = characterCount * 2 - 1;
@@ -141,7 +151,7 @@ HUFMAN_TREE_NODE *initHufmanTreeNode(u32 characterCount, u32 *orientate, ATTRIBU
 
 	for (i = 0; i < characterCount; i++) {
 		hufmanTreeNode[i].visited = FALSE;
-		hufmanTreeNode[i].hufmanCode = (u8 *) calloc(sizeof(u8), characterCount);
+		hufmanTreeNode[i].hufmanCode = (uin8_t *) calloc(sizeof(uin8_t), characterCount);
 		hufmanTreeNode[i].leftChild = hufmanTreeNode[i].rightChild = -1;
 		hufmanTreeNode[i].attribute = attributeList[i];
 
@@ -150,8 +160,8 @@ HUFMAN_TREE_NODE *initHufmanTreeNode(u32 characterCount, u32 *orientate, ATTRIBU
 	return hufmanTreeNode;
 }
 
-void showAttributeList(u32 characterCount, ATTRIBUTE *attributeList) {
-	u32 i;
+void showAttributeList(uint32_t characterCount, ATTRIBUTE *attributeList) {
+	uint32_t i;
 
 	for (i = 0; i < characterCount; i++) {
 		printf("freq:%d character:%c\n", attributeList[i].frequency, attributeList[i].character);
@@ -165,10 +175,10 @@ void destoryAttributeList(ATTRIBUTE *attributeList) {
 	free(attributeList);
 }
 
-ATTRIBUTE *initAttributeList(u8 *str, u32 *ascii, u32 *characterCount) {
-	u32 i;
-	u32 index = 0;
-	u32 count = 0;
+ATTRIBUTE *initAttributeList(uin8_t *str, uint32_t *ascii, uint32_t *characterCount) {
+	uint32_t i;
+	uint32_t index = 0;
+	uint32_t count = 0;
 	ATTRIBUTE *attributeList;
 
 	for (i = 0; str[i]; i++) {
@@ -182,7 +192,7 @@ ATTRIBUTE *initAttributeList(u8 *str, u32 *ascii, u32 *characterCount) {
 	attributeList = (ATTRIBUTE *) calloc(sizeof(ATTRIBUTE), count);
 	for (i = 0; i < 256; i++) {
 		if (ascii[i] != 0) {
-			attributeList[index].character = (u8) i;
+			attributeList[index].character = (uin8_t) i;
 			attributeList[index++].frequency = ascii[i];
 		}
 	}
@@ -190,13 +200,13 @@ ATTRIBUTE *initAttributeList(u8 *str, u32 *ascii, u32 *characterCount) {
 }
 
 int main() {
-	u8 str[128];
-	u8 code[256];
-	u8 *hufCode = NULL;
-	u8 *decode = NULL;
-	u32 ascii[256] = {0};
-	u32 orientate[256] = {0};
-	u32 characterCount;
+	uin8_t str[128];
+	uin8_t code[256];
+	uin8_t *hufCode = NULL;
+	uin8_t *decode = NULL;
+	uint32_t ascii[256] = {0};
+	uint32_t orientate[256] = {0};
+	uint32_t characterCount;
 	ATTRIBUTE *attributeList = NULL;
 	HUFMAN_TREE_NODE *hufmanTreeNode = NULL;
 

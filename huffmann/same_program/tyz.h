@@ -10,7 +10,7 @@
 #define GET(value, index)    (((value) & (1 << ((index) ^ 7))) != 0)
 
 typedef unsigned char boolean;
-typedef unsigned int u32;
+// typedef unsigned int u32;
 typedef unsigned short u16;
 typedef boolean u8;
 

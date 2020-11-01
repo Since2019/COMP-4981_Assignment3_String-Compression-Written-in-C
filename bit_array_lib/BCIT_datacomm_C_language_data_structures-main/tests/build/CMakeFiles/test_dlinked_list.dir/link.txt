@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/test_dlinked_list.dir/test_dlink.c.o -o test_dlinked_list  -Wl,-rpath,"/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/bit_array_lib/BCIT_datacomm_C_language_data_structures-main/tests/build" libdc_utils.so 
