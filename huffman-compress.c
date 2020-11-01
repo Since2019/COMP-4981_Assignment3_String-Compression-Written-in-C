@@ -6,40 +6,7 @@
 #include "hufmanTree.h"
 
 
-/**
-  *	 You pass in an array of huffman Code, the number of characters in the file
-  *	 As well as the huffman Treenode struct
-  *  @param hufCode : 
-  *  @param characterCount
-  *  @param hufmanTreeNode
-  *
-  */
-uin8_t *decoding(uin8_t *hufCode, uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
-	uin8_t *decode = NULL;
-	uint32_t i;
-	uint32_t index = 0;
-	uint32_t sum = 0;
-	uint32_t father = 2 * characterCount - 2;
 
-	for (i = 0; i < characterCount; i++) {
-		sum += hufmanTreeNode[i].attribute.frequency;
-	}
-	decode = (uin8_t *) calloc(sizeof(uin8_t), sum);
-
-	for (i = 0; hufCode[i]; i++) {
-		if ('0' == hufCode[i]) {
-			decode[index++] = hufmanTreeNode[hufmanTreeNode[father].leftChild].attribute.character;
-			father = characterCount * 2 - 2;
-		} else {
-			father = hufmanTreeNode[father].rightChild;
-			if (-1 == hufmanTreeNode[father].leftChild) {
-				decode[index++] = hufmanTreeNode[father].attribute.character;
-				father = characterCount * 2 - 2;
-			}
-		}
-	}
-	return decode;
-}
 
 /**
   * Freee the memory.
@@ -221,7 +188,7 @@ int main() {
 	uin8_t str[128];
 	uin8_t code[256];
 	uin8_t *hufCode = NULL;
-	uin8_t *decode = NULL;
+
 	uint32_t ascii[256] = {0};
 	uint32_t orientate[256] = {0};
 	uint32_t characterCount;
@@ -247,21 +214,14 @@ int main() {
 
 	hufCode = coding(str, orientate, characterCount, hufmanTreeNode); // Encoding:
 
-
-	//Decoding:
-
 	printf("Hufman Code Below\n");
-	printf("%s\n", hufCode);
+	// We later need to change this to outputting in real bits. 
+	printf("%s", hufCode);
 
-	decode = decoding(hufCode, characterCount, hufmanTreeNode);
-
-	printf("Hufman Decode Below\n");
-	printf("%s\n", decode);
 
 
 	//Release Memory
 	destoryCode(hufCode);
-	destoryCode(decode);
 
 	destoryAttributeList(attributeList);
 	destoryHufmanTreeNode(characterCount, hufmanTreeNode);
