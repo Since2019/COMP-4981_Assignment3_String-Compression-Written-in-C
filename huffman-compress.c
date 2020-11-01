@@ -196,8 +196,11 @@ int main() {
 	HUFMAN_TREE_NODE *hufmanTreeNode = NULL;
 
 
-
 	
+	// make a fd input read() for str
+	// 
+	// 
+	// 
 	printf("Your input, please:\n");
 	fgets(str,128,stdin); //Encoding part
 
@@ -216,6 +219,9 @@ int main() {
 
 	printf("Hufman Code Below\n");
 	// We later need to change this to outputting in real bits. 
+	//
+	//
+	//
 	printf("%s", hufCode);
 
 

@@ -244,7 +244,10 @@ int main() {
 	printf("Hufman Tree Below\n");
 	showHufmanTreeNode(2*characterCount-1, hufmanTreeNode);
 
-
+	// Delete this part
+	// 
+	// 
+	// 
 	hufCode = coding(str, orientate, characterCount, hufmanTreeNode); // Encoding:
 
 
@@ -253,8 +256,14 @@ int main() {
 	printf("Hufman Code Below\n");
 	printf("%s\n", hufCode);
 
-	decode = decoding(hufCode, characterCount, hufmanTreeNode);
 
+
+	// make a input read() for hufCode.
+	// 
+	// 
+	// 
+	decode = decoding(hufCode, characterCount, hufmanTreeNode);
+	
 	printf("Hufman Decode Below\n");
 	printf("%s\n", decode);
 
