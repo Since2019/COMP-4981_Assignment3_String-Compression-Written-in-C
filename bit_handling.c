@@ -41,11 +41,55 @@ void twelve_bits_output(uint16_t twelve_bits_array){
 
 
     /**
-     * 12bits: 101001100001
-     *   mask:            1
+     * 
+     * ---------shifts one bit at a time----------
+     * 
+     * 12bits:     101001100101
+     *   mask:     100000000000
      *  8bits:     00000000
      *  
      *  8bits  <- 12bits and mask
+     * 
+     *  shift 1:
+     *  12bits:             101001100101
+     *   mask:               100000000000 
+     *  8bits:              10000000
+     * 
+     *  shift 2:
+     *  12bits:            101001100101
+     *   mask:               100000000000 
+     *  8bits:             10000000
+     * --------------------------------------------
+     * 
+     * 
+     * 
+     *=========right shift and then shift back=====
+     *
+     * --------right shift 4 bits and then shift back-----
+     * 
+     * 12bits:                  101001100101
+     * 12bits_tmp shift 1       10100110
+     *           (do the masking:)
+     * 8bits:                   10100110
+     * 
+    
+     * --------left shift 8 bits -----
+     * 
+     * 12bits:                  101001100101
+     * 12bits_tmp shift 2       0101--------
+     *           (do the masking:)
+     * 8bits:                   0101--------
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
     */
 
 
