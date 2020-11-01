@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/huffman-compress.c
+stdio.h
+-
+string.h
+-
+malloc.h
+-
+hufmanTree.h
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/hufmanTree.h
+
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/hufmanTree.h
+inttypes.h
+-
+

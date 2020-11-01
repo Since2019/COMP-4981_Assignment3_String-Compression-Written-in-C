@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/decompress-lzw.c
+unistd.h
+-
+fcntl.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+inttypes.h
+-
+
