@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/huffman-compress.dir/huffman-compress.c.o -o huffman-compress   -L/usr/local/lib 

@@ -8,7 +8,9 @@
 #define CODE_BITS 12
 
 #define NOT_EXIST -1
-#define START_WITH_HASH_TAG 1
+// #define START_WITH_HASH_TAG 1
+// #define START_WITH_NULL 1
+
 
 // #define PRINT_OUT_DICTIONARY 1
 
@@ -90,8 +92,22 @@ void init_dictionary(Dictionary * dict, int max_size) {
     insert_seq(dict,"#");
     #endif
 
-    char seq[2] = "A";
-    for(int i=0; i < 26; i++) {
+    #ifdef START_WITH_NULL
+    //flag at position 0
+    insert_seq(dict,"\0");
+    #endif
+
+
+    // char seq[2] = "A";
+    // for(int i=0; i < 26; i++) {
+    //     insert_seq(dict,seq);
+    //     seq[0]++;
+    // }
+
+
+    // insert_seq(dict,"\0");
+    char seq[2] = "\0";
+    for(int i=0; i < 256; i++) {
         insert_seq(dict,seq);
         seq[0]++;
     }
@@ -155,7 +171,6 @@ void lzw_encode(uint8_t* text, Dictionary* dict){
         uint8_t* code_buffer; 
         decimalToBinary(code,code_buffer,CODE_BITS);
         printf("%s",code_buffer);
-        
 
     }
 
@@ -193,7 +208,22 @@ void parse_args(int argc,char* argv[]){
 
 
 
-
+// void read_from_file_and_write_to(uint8_t* file_content){
+//     uint8_t* buffer;
+//     uint8_t* file_content = malloc(sizeof(uint8_t)*100);
+//     size_t index = 0;
+//     size_t ret;
+//     while(1){
+//         file_content = (uint8_t*) realloc(file_content, index*1 + 1);
+//         ret = read(STDIN_FILENO,buffer,1);
+//         if(ret == 0)
+//             break;
+//         // printf("%c",buffer[0]);
+//         file_content[index] = (uint8_t)buffer[0];
+//         ++index;
+//     }
+//     file_content[index]='\0';
+// }
 
 
 int main(int argc, char* argv[]){
@@ -214,10 +244,11 @@ int main(int argc, char* argv[]){
 
     
     uint8_t* buffer;
-    uint8_t* file_content = malloc(sizeof(uint8_t)*10000);
+    uint8_t* file_content = malloc(sizeof(uint8_t)*100);
     size_t index = 0;
     size_t ret;
     while(1){
+        file_content = (uint8_t*) realloc(file_content, index*1 + 1);
         ret = read(STDIN_FILENO,buffer,1);
         if(ret == 0)
             break;

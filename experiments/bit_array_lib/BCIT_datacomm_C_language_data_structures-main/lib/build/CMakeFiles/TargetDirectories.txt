@@ -1,0 +1,3 @@
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/bit_array_lib/BCIT_datacomm_C_language_data_structures-main/lib/build/CMakeFiles/rebuild_cache.dir
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/bit_array_lib/BCIT_datacomm_C_language_data_structures-main/lib/build/CMakeFiles/test.dir
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/bit_array_lib/BCIT_datacomm_C_language_data_structures-main/lib/build/CMakeFiles/edit_cache.dir

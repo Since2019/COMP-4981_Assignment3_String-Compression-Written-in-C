@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/bit_array_lib/BCIT_datacomm_C_language_data_structures-main/lib/bit_array.h
+stdlib.h
+-
+stdint.h
+-
+stdbool.h
+-
+
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/bit_array_lib/BCIT_datacomm_C_language_data_structures-main/tests/test_bit_array.c
+stdio.h
+-
+../lib/bit_array.h
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/bit_array_lib/BCIT_datacomm_C_language_data_structures-main/lib/bit_array.h
+

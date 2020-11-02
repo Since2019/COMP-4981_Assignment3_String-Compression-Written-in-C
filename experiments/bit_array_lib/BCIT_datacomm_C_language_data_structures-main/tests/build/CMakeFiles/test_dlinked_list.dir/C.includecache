@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/bit_array_lib/BCIT_datacomm_C_language_data_structures-main/lib/dlinked_list.h
+stddef.h
+-
+
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/bit_array_lib/BCIT_datacomm_C_language_data_structures-main/tests/test_dlink.c
+stdio.h
+-
+../lib/dlinked_list.h
+/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/bit_array_lib/BCIT_datacomm_C_language_data_structures-main/lib/dlinked_list.h
+

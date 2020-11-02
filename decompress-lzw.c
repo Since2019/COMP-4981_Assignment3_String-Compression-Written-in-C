@@ -6,7 +6,7 @@
 #include <inttypes.h>
 
 #define NOT_EXIST -1
-#define START_WITH_HASH_TAG 1
+// #define START_WITH_HASH_TAG 1
 
 #define TEST_EXISTENCE 1
 
@@ -84,8 +84,15 @@ void init_dictionary(Dictionary * dict, int max_size) {
     insert_seq(dict,"#");
     #endif
 
-    char seq[2] = "A";
-    for(int i=0; i < 26; i++) {
+    // char seq[2] = "A";
+    // for(int i=0; i < 26; i++) {
+    //     insert_seq(dict,seq);
+    //     seq[0]++;
+    // }
+
+    // insert_seq(dict,"\0");
+    char seq[2] = "\0";
+    for(int i=0; i < 256; i++) {
         insert_seq(dict,seq);
         seq[0]++;
     }
@@ -204,7 +211,7 @@ void lzw_decode(int codes[], int n,Dictionary* dict){
     
     while(1){
         // code_array = (int*) realloc(code_array, (sizeof(code_array) + sizeof(int)*1) );
-         code_array = (int*) realloc(code_array, index*12 + 1 );
+        code_array = (int*) realloc(code_array, index*12 + 1 );
 
         // read 12 bits per time.
         ret = read(STDIN_FILENO,buffer,12);
