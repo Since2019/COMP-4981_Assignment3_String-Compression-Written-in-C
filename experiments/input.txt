@@ -1,1 +1,8 @@
-AAAAA22222%F
+[Unit]
+After=network.service
+
+[Service]
+ExecStart=/usr/local/bin/StartOneDrive.sh
+
+[Install]
+WantedBy=default.target
