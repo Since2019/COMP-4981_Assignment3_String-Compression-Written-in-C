@@ -3,7 +3,7 @@
 #define RESET   "\033[0m"
 #define RED     "\033[31m"      /* Red */
 
-int parse_args(int argc, const char* argv[])
+int ih_parse_args(int argc, const char* argv[])
 {   
 
     // check if input file exists
@@ -11,44 +11,34 @@ int parse_args(int argc, const char* argv[])
     while(arg_count < argc && strcmp(argv[arg_count], ">") != 0)
     {
         fprintf(stderr, "checking args at %d with %s\n", arg_count, argv[arg_count]);
-        if(strstr(argv[arg_count], ".txt") != NULL)
-        {
-            
-            int fd = open(argv[arg_count], O_RDONLY);
-            dup2(fd, STDIN_FILENO);
-            // close(fd);
-        }
+        fh_set_infile(argv[arg_count]);       
         
-        if(strcmp(argv[arg_count], ">") == 0)
-        {
-            fprintf(stderr, "if file was defined, please use a txt file\n");
-        }
         arg_count++;
     }
 
     return 0;
 }
 
-int parse_args_wopt(int argc, const char* argv[],struct option long_option[])
+int ih_parse_args_wopt(int argc, const char* argv[], struct option long_option[], int opt_count)
 {   
 
     char* const* args = (char* const*)argv;
 
-    // if arguments is less than 2
-    if(argc < 2) {
-        fprintf(stderr, "run with   ./program --even | --odd \n");
-        return 1;
+    // if arguments is less than the number of required options
+    // incremented by 1 since the program is counted as an argument
+    if(argc < opt_count + 1) {
+        return 0;
     }
 
     // option counter check
-    int opt_count;
+    int opt_counter;
     while (1)
     {
 
         int option_index = 0;
-        opt_count = getopt_long_only(argc, args, ":", long_option, &option_index);
+        opt_counter = getopt_long_only(argc, args, ":", long_option, &option_index);
 
-        if (opt_count == -1)
+        if (opt_counter == -1)
             break;
     }
 
@@ -57,40 +47,10 @@ int parse_args_wopt(int argc, const char* argv[],struct option long_option[])
     while(arg_count < argc && strcmp(argv[arg_count], ">") != 0)
     {
         fprintf(stderr, "checking args at %d with %s\n", arg_count, argv[arg_count]);
-        if(strstr(argv[arg_count], ".txt") != NULL)
-        {
-            int fd = open(argv[arg_count], O_RDONLY);
-            dup2(fd, STDIN_FILENO);
-            close(fd);
-        }
+        fh_set_infile(argv[arg_count]);
         arg_count++;
     }
 
 
-    return 0;
-}
-
-void parse_file_args(int argc, const char* argv[], FILE* ifile)
-{   
-
-    // check if input file exists
-    int arg_count = 1;
-    while(arg_count < argc && strcmp(argv[arg_count], ">") != 0)
-    {
-        fprintf(stderr, "checking args at %d with %s\n", arg_count, argv[arg_count]);
-        if(strstr(argv[arg_count], ".txt") != NULL)
-        {
-            ifile = fopen(argv[arg_count], "r");
-            int fd = fileno(ifile);
-            dup2(fd, STDIN_FILENO);
-            close(fd);
-        }
-        
-
-        if(strcmp(argv[arg_count], ">") == 0)
-        {
-            fprintf(stderr, "if file was defined, please use a txt file\n");
-        }
-        arg_count++;
-    }
+    return 1;
 }
