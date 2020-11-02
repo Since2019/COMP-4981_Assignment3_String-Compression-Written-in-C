@@ -1,8 +1,0 @@
-freq:1 character:%
-freq:1 character:H
-freq:1 character:T
-freq:2 character:e
-freq:1 character:h
-freq:1 character:i
-freq:1 character:r
-0111100101001010011100

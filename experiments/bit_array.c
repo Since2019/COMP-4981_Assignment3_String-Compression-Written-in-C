@@ -78,7 +78,7 @@ bool bit_array_check_bit( bit_array * this, size_t index ) {
 }
 
 uint8_t bit_array_check_byte( bit_array * this, size_t index ) {
-    if (( index + TWELVE_BITS ) > this->bit_length ) {
+    if (( index + BYTE ) > this->bit_length ) {
         if ( this->enable_error_logs ) fprintf( stderr, "bit_array_set_bit: index out of bounds.\n" );
         return OPERATION_FAIL;
     }

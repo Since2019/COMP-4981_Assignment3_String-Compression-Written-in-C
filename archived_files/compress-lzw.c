@@ -150,15 +150,17 @@ void lzw_encode(uint8_t* text, Dictionary* dict){
     // Wonder how to make this dynamic
     uint8_t current[1000];
     uint8_t next;
-    int  code;
+    uint16_t  code;
     int  i = 0;
 
 
 
     //init bit_array
     bit_array *output = bit_array_create();
-    bit_array_init(output, 4096 );
+    bit_array_init(output, 12 );
 
+
+    fprintf(stderr,"PRINTING OUT ENCODED MSG IN DECIMAL:\n");
     while(i < strlen(text)){
         sprintf(current,"%c",text[i]);
         next = text[i+1];
@@ -173,6 +175,9 @@ void lzw_encode(uint8_t* text, Dictionary* dict){
         current[strlen(current) - 1] = '\0';
         next = text[i];
         code = get_seq_code(dict,current);
+
+        fprintf(stderr,"%u ",code);
+
         sprintf(current,"%s%c",current,next);
         insert_seq(dict,current);
         // printf("%d %s\n",code,current);
@@ -189,12 +194,14 @@ void lzw_encode(uint8_t* text, Dictionary* dict){
 
         //add bits
         bit_array_add_twelve_bits(output,code);
-
-    }
+        
+    }   
     
     //print
+    fprintf(stderr,"");
     for (size_t i = 0; i < output->bit_length / 8; i++) {
-        printf("%c", bit_array_check_byte(output, i));
+        fprintf(stderr,"%u ", bit_array_check_byte(output, i*8));
+        printf("%c", bit_array_check_byte(output, i*8));
     }
 
 }

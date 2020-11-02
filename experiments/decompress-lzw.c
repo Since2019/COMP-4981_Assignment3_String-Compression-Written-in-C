@@ -144,59 +144,36 @@ uint8_t* get_code_seq(Dictionary *dict,uint16_t code){
 
 
 
-
-void lzw_encode(uint8_t* text, Dictionary* dict){
-    // Wonder how to make this dynamic
-    uint8_t current[1000];
-    uint8_t next;
-    int  code;
-    int  i = 0;
-    while(i < strlen(text)){
-        sprintf(current,"%c",text[i]);
-        next = text[i+1];
-
-        // Has not reached the end of the sequence table
-        while(get_seq_code(dict,current) != NOT_EXIST){
-            sprintf(current,"%s%c",current,next);
-            i++;
-            next = text[i+1];
-        }
-
-        current[strlen(current) - 1] = '\0';
-        next = text[i];
-        code = get_seq_code(dict,current);
-        sprintf(current,"%s%c",current,next);
-        insert_seq(dict,current);
-        printf("%d %s\n",code,current);
-    }
-
-}
-
 /**
   * @param codes : codes
   * @param Dictionary* dict
   */
 void lzw_decode(uint16_t codes[], int n,Dictionary* dict){
-    uint16_t code;
+    uint16_t code; //extract the 12 bits 
     char prev[1000];
     char* output;
-
+    
     code = codes[0];
-    output = get_code_seq(dict,code);
-    printf("%s", output);
+    // output = get_code_seq(dict,code);
+    // printf("%s", output);
 
     int i;
+    
     for(i = 1; i < n; i ++){
         code = codes[i];
         strcpy(prev,output);
+        
         output = get_code_seq(dict, code);
+        fprintf(stderr,"%output:s Num:%d",output,i);
         sprintf(prev,"%s%c",prev,output[0]);
 
         insert_seq(dict,prev);
-
+        
         printf("%s",output);
+        
     }
-
+    
+    
 }
 
 /**
@@ -208,88 +185,50 @@ void lzw_decode(uint16_t codes[], int n,Dictionary* dict){
       //===========READING INTO BIT ARRAY=============================
     //init bit_array
     bit_array *input = bit_array_create();
-    bit_array_init(input, 4096 );
+    bit_array_init(input, 8 );
     // ----------Doing Reading --------------------------------------
-    uint8_t* buffer = malloc(sizeof(uint16_t)*2);
+    uint8_t* buffer = malloc(sizeof(uint8_t)*2);
     // uint8_t* file_content = malloc(sizeof(uint8_t)*100);
-    size_t index = 0;
+    int index = 0;
     size_t ret;
     //-----------Putting bits into a bit array.--------------
+    
     while(1){
         
-        // input = (bit_array*) realloc(input, sizeof(bit_array*)*index + 1);
         ret = read(STDIN_FILENO, buffer,1);
         if(ret == 0)
             break;
-        // printf("%c",buffer[0]);
-        // file_content[index] = (uint8_t)buffer[0];
+
         
         bit_array_add_byte(input,(uint8_t)buffer[0]);
-
-
-
+        
         ++index;
         
 
     }
+ 
 
-
-
-    // file_content[index]='\0';
-
-    //-------------Write a function, extract 12 bits -------
-    //-------------from the bit array and then put----------
-    //-------------the bits into uint16_t variables---------
-    //-------------(just modify the bit_array_check_byte function)
-    //------------- into twelve bits, and it should work---------
-    
-
-    index = 0;
+    int idx = 0;
     
     for (size_t i = 0; i < input->bit_length / 12; i++) {
-        // fprintf(stderr,"err happened after:%u",i);
+ 
         
-        code_array[index] = bit_array_check_twelve_bits(input,i);  
-        fprintf(stderr,"%u     ",code_array[index]);
+        code_array[idx] = bit_array_check_twelve_bits(input,i);  
+        fprintf(stderr,"%u  ",code_array[idx]);
         
-        ++index;
-        if(index == 90)
-            break;
+        ++idx;
+
         
     }  
+    return index;
     
 }
-// int* read_codes(uint8_t* file_content){
-//     uint8_t* buffer;
-//     int code_buffer;
-//     size_t index = 0;
-//     size_t ret;
-
-//     int* code_array;
-
-//     // read 12 bits per time.
-//     while(1){
-//         file_content = realloc(file_content, sizeof(uint8_t)*(sizeof(file_content) + 12));
-//         ret = read(STDIN_FILENO,buffer,12);
-//         if(ret == 0)
-//             break;
-//         // printf("%c",buffer[0]);
-//         file_content[index] = (uint8_t)buffer[0];
-//         ++index;
-
-//         code_array[index] = binToInt(buffer);
-//     }
-//     // The buffer ends.
-//     file_content[index]='\0';
-
-
-//     return code_array;
-// }
 
 
 int main(){
 
     //File content ( char array ) 
+    //We don't need this anymore.
     uint8_t* file_content = malloc(sizeof(uint8_t)*13);
 
 
@@ -299,17 +238,19 @@ int main(){
 
     Dictionary dict;
 
+
+
     // Not sure if 4096 is the correct num.
     init_dictionary(&dict,4096);
 
     
 
-
+    
 
     
     
     lzw_decode(code_array,num_of_codes,&dict);
-
-
+    
+    
     return 0;
 }
