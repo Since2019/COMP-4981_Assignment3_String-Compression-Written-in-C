@@ -78,7 +78,7 @@ bool bit_array_check_bit( bit_array * this, size_t index ) {
 }
 
 uint8_t bit_array_check_byte( bit_array * this, size_t index ) {
-    if (( index + TWELVE_BITS ) > this->bit_length ) {
+    if (( index + BYTE ) > this->bit_length ) {
         if ( this->enable_error_logs ) fprintf( stderr, "bit_array_set_bit: index out of bounds.\n" );
         return OPERATION_FAIL;
     }
@@ -91,6 +91,37 @@ uint8_t bit_array_check_byte( bit_array * this, size_t index ) {
     byte += bit_array_check_bit( this, index++ ) * 8;
     byte += bit_array_check_bit( this, index++ ) * 4;
     byte += bit_array_check_bit( this, index++ ) * 2;
+    byte += bit_array_check_bit( this, index++ ) * 1;
+
+    return byte;
+}
+
+int overflow_handler( bit_array * this,size_t index) {
+        if (( index + 1 ) > this->bit_length ) {
+        if ( this->enable_error_logs ) fprintf( stderr, "bit_array_set_bit: index out of bounds.\n" );
+        return OPERATION_FAIL;
+    }
+}
+
+uint8_t bit_array_check_byte_modified( bit_array * this, size_t index ) {
+
+    overflow_handler(this,index);
+
+    uint8_t byte = 0;
+    byte += bit_array_check_bit( this, index++ ) * 128;
+    overflow_handler(this,index);
+    byte += bit_array_check_bit( this, index++ ) * 64;
+    overflow_handler(this,index);
+    byte += bit_array_check_bit( this, index++ ) * 32;
+    overflow_handler(this,index);
+    byte += bit_array_check_bit( this, index++ ) * 16;
+    overflow_handler(this,index);
+    byte += bit_array_check_bit( this, index++ ) * 8;
+    overflow_handler(this,index);
+    byte += bit_array_check_bit( this, index++ ) * 4;
+    overflow_handler(this,index);
+    byte += bit_array_check_bit( this, index++ ) * 2;
+    overflow_handler(this,index);
     byte += bit_array_check_bit( this, index++ ) * 1;
 
     return byte;

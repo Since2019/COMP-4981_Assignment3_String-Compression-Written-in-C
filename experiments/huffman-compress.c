@@ -6,7 +6,7 @@
 #include "hufmanTree.h"
 #include <stdlib.h>
 
-
+#include "bit_array.c"
 
 /**
   * Freee the memory.
@@ -149,7 +149,7 @@ void showAttributeList(uint32_t characterCount, ATTRIBUTE *attributeList) {
 	uint32_t i;
 
 	for (i = 0; i < characterCount; i++) {
-		printf("freq:%d character:%c\n", attributeList[i].frequency, attributeList[i].character);
+		fprintf(stderr,"freq:%d character:%c\n", attributeList[i].frequency, attributeList[i].character);
 	}
 }
 
@@ -224,14 +224,59 @@ ATTRIBUTE *initAttributeList(uint8_t *str, uint32_t *ascii, uint32_t *characterC
     return index;
 }
 
+/**
+ * 
+ * @param huffcode_readable : the readable huffmancode.
+ * @return huffman_binary : returns a binary string.
+ */
+bit_array* bit_output_stream(uint8_t* huffcode_readable){
+		// Bit array creation and initiation:
+	bit_array* huffcode_binary = bit_array_create();
+	bit_array_init(huffcode_binary,8);
+
+	uint8_t* readable_huffcode = huffcode_readable;	
 
 
+
+	bit_array_init(huffcode_binary,8);
+
+	// // huffcode_readable is a char*
+	// while(*readable_huffcode != '\0'){
+
+	// 	if (readable_huffcode[0] == '0'){
+	// 		bit_array_add_bit(huffcode_binary,0);
+	// 	}
+	// 	else if(readable_huffcode[0] == '1'){
+	// 		bit_array_add_bit(huffcode_binary,1);
+	// 	}
+		
+		
+	// 	++readable_huffcode;
+	// }
+
+		// huffcode_readable is a char*
+	for(size_t i=0; readable_huffcode[i] != '\0'; i++){
+
+		if (readable_huffcode[i] == '0'){
+			bit_array_add_bit(huffcode_binary,0);
+		}
+		else if(readable_huffcode[i] == '1'){
+			bit_array_add_bit(huffcode_binary,1);
+		}
+
+	}
+
+	
+
+
+	return huffcode_binary;
+}
 
 
 int main() {
 	// uint8_t str[128];
 	uint8_t code[256];
-	uint8_t *hufCode = NULL;
+	uint8_t *huffcode_readable = NULL;
 
 	uint32_t ascii[256] = {0};
 	uint32_t orientate[256] = {0};
@@ -239,7 +284,7 @@ int main() {
 	ATTRIBUTE *attributeList = NULL;
 	HUFMAN_TREE_NODE *hufmanTreeNode = NULL;
 
-
+	
 	
 	// make a fd input read() for str
 	// 
@@ -276,23 +321,61 @@ int main() {
 	showHufmanTreeNode(2*characterCount-1, hufmanTreeNode);
 
     // hufCode = coding(str, orientate, characterCount, hufmanTreeNode); // Encoding:
-	hufCode = coding(input_bytes_content, orientate, characterCount, hufmanTreeNode);
+	huffcode_readable = coding(input_bytes_content, orientate, characterCount, hufmanTreeNode);
 	
 
-	fprintf(stderr,"Hufman Code Below\n");
-	fprintf(stderr,"%s", hufCode);
+	fprintf(stderr,"The output of huffman code is below\n");
 
 
+
+
+
+	bit_array* binary_output = bit_output_stream(huffcode_readable);
 	// We later need to change this to outputting in real bits. 
 	//
 	//
 	//It's printing out to the file..
-	printf("%s", hufCode);
+	// printf("%s",huffcode_readable);
+
+	// for(size_t i = 0;i < binary_output->bit_length; i++ ){
+	// 	printf("%d",bit_array_check_bit(binary_output,i));
+	// }
+
+
+	//output to terminal
+	for(size_t i = 0;i < binary_output->bit_length; i++ ){
+		fprintf(stderr,"%d",bit_array_check_bit(binary_output,i));
+	}
+
+	//output to file.
+	for(size_t i = 0;i < binary_output->bit_length / 8; i++ ){
+		printf("%c",bit_array_check_byte_modified(binary_output,i*8));
+	}	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 	//Release Memory
-	destoryCode(hufCode);
+	destoryCode(huffcode_readable);
 
 	destoryAttributeList(attributeList);
 	destoryHufmanTreeNode(characterCount, hufmanTreeNode);
