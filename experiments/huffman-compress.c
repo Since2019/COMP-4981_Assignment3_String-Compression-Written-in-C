@@ -349,8 +349,8 @@ int main() {
 
 	//output to file.
 	for(size_t i = 0;i < binary_output->bit_length / 8; i++ ){
-		printf("%c",bit_array_check_byte(binary_output,i*8));
-	}
+		printf("%c",bit_array_check_byte_modified(binary_output,i*8));
+	}	
 	
 
 
