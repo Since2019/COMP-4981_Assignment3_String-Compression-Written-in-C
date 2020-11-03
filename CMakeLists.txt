@@ -11,11 +11,11 @@ add_library(lib STATIC input_handler.c file_handler.c bit_array.c)
 target_compile_options(lib PRIVATE -Wpedantic -Wall -Wextra)
 
 add_executable(compress-rle compress-rle.c)
-# target_link_libraries(compress-lzw lib)
+# target_link_libraries(compress-rle lib)
 target_compile_options(compress-rle PRIVATE -Wpedantic -Wall -Wextra)
 
 add_executable(decompress-rle decompress-rle.c)
-# target_link_libraries(decompress-lzw lib)
+# target_link_libraries(decompress-rle lib)
 target_compile_options(decompress-rle PRIVATE -Wpedantic -Wall -Wextra)
 
 add_executable(compress-lzw compress-lzw.c)
