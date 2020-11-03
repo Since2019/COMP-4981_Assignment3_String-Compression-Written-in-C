@@ -1,110 +1,80 @@
 #include <unistd.h>
-#include <fcntl.h> 
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
+#include "bit_array.h"
+#include "input_handler.h"
 
-#define NOT_EXIST -1
+#define CODE_BITS 12
+#define MAX_SIZE 4096
+
+#define NOT_EXIST (-1)
 // #define START_WITH_HASH_TAG 1
+// #define START_WITH_NULL 1
 
-#define TEST_EXISTENCE 1
+// #define PRINT_OUT_DICTIONARY 1
 
-
-/**
- *  converts the binary uint8_t array into 
- *  an 8-bit unsigned integer
- */
-int binToInt( uint8_t* binstr ) 
-{          
-    int result = 0 ;
-    int bit = 0; 
-    while( binstr[bit] != '\0' )
-    {
-        if( binstr[bit] == '1' )
-        {
-            result |= 1 ;
-        }
-
-        bit++ ;
-        if( binstr[bit] != '\0' )
-        {
-            result <<= 1 ;
-        }
-    }
-
-    return result ;
-}          
-
-
-typedef struct {
+typedef struct
+{
     //string array stores the strings
     //that is added to the dictionary
-    uint8_t ** seq;
+    uint8_t **seq;
     //corresponding dictionary
     //code in the dictionary
-    int *   code;
+    int *code;
     //the size of the dictonary
-    int     size;
-    //how many code can the dictionary have
-    int     max_size;
+    int size;
 } Dictionary;
 
 /**
  * @param dict : the address of the Dictionary you want to init
  * @param seq : how many characters can it hold
  */
-void insert_seq(Dictionary* dict, uint8_t * seq){
+void insert_seq(Dictionary *dict, uint8_t *seq)
+{
     int i = dict->size;
     // +1 means null byte
-    dict -> seq[i] = malloc(sizeof(char) *strlen(seq) + 1);
+    dict->seq[i] = malloc(sizeof(char) * strlen(seq) + 1);
 
     dict->code[i] = i;
 
     dict->size++;
 
-    //fill the seq with the newly added item
-    strcpy(dict->seq[i],seq);
+    // fprintf(stderr, "added %s\n", seq);
+
+    // fill the seq with the newly added item
+    strcpy(dict->seq[i], seq);
 }
 
 /**
  * @param dict : the address of the Dictionary you want to init
  * @param max_size : how many characters can it hold
  */
-void init_dictionary(Dictionary * dict, int max_size) {
-    dict -> max_size = max_size;
-    dict -> size     = 0;
-    //
-    dict -> seq      = malloc(sizeof(char*) *max_size);
-    dict -> code     = malloc(sizeof(int)   * max_size);
+void init_dictionary(Dictionary *dict)
+{
+    (*dict).size = 0;
+    (*dict).seq = malloc(sizeof(char *) * MAX_SIZE);
+    (*dict).code = malloc(sizeof(int) * MAX_SIZE);
 
-
-    #ifdef START_WITH_HASH_TAG
-    //flag at position 0
-    insert_seq(dict,"#");
-    #endif
-
-    // char seq[2] = "A";
-    // for(int i=0; i < 26; i++) {
-    //     insert_seq(dict,seq);
-    //     seq[0]++;
-    // }
-
-    // insert_seq(dict,"\0");
     char seq[2] = "\0";
-    for(int i=0; i < 256; i++) {
-        insert_seq(dict,seq);
+    for (int i = 0; i < 256; i++)
+    {
+        insert_seq(dict, seq);
         seq[0]++;
     }
 }
 
-void print_dictionary(Dictionary* dict){
+void print_dictionary(Dictionary *dict)
+{
     printf("=========================\n");
     printf("Code           Sequence\n");
     printf("=========================\n");
-    for(int i=0; i< dict->size; i++){
-        printf("%5d%7c",dict->code[i], ' ');
-        printf("%s\n",dict->seq[i]);
+    for (int i = 0; i < dict->size; i++)
+    {
+        printf("%5d%7c", dict->code[i], ' ');
+        printf("%s\n", dict->seq[i]);
     }
     printf("=========================\n");
 }
@@ -113,174 +83,196 @@ void print_dictionary(Dictionary* dict){
  *  @param dict: dictionary
  *  @param seq : compares if the seq are the same or not.
  */
-int get_seq_code(Dictionary *dict,char* seq){
-    for(int i=0;i<dict->size; i++){
-        if(strcmp(dict->seq[i],seq)==0){
+int get_seq_code(Dictionary *dict, char *seq)
+{
+    int i;
+    for (i = 0; i < dict->size; i++)
+    {
+        if (strcmp(dict->seq[i], seq) == 0)
+        {
+            fprintf(stderr, "loop code %s vs %s returned %d\n", dict->seq[i], seq, dict->code[i]);
             return dict->code[i];
         }
     }
-//  Not exist
-    return NOT_EXIST;
-
+    //  Not exist
+    fprintf(stderr, "loop code %s vs %s returned %d [FAIL]\n", dict->seq[i], seq, i);
+    return i;
 }
 
-/**
- *  @param dict: dictionary
- *  @param seq : compares if the seq are the same or not.
- */
-uint8_t* get_code_seq(Dictionary *dict,int code){
-    //err handling
-    if(code < 0 || code >= dict->size) {
-        return NULL;
+char *get_seq_char(Dictionary *dict, int code)
+{
+    int i;
+    for (i = 0; i < dict->size; i++)
+    {
+        if (dict->code[i] == code)
+        {
+            fprintf(stderr, "returned sequence: %s\n", dict->seq[i]);
+            return dict->seq[i];
+        }
     }
-    else{
-        int i = code;
-        return dict->seq[i];
-    }
+    //  Not exist
+    fprintf(stderr, "returned sequence: %s\n", "EOF");
+    return "\0";
 }
 
+void debug_print(char *c)
+{
+    fprintf(stderr, "%s", c);
+}
 
+void print_bin(int val, int length)
+{
+    int what_bit_testing = 0;
 
-
-void lzw_encode(uint8_t* text, Dictionary* dict){
-    // Wonder how to make this dynamic
-    uint8_t current[1000];
-    uint8_t next;
-    int  code;
-    int  i = 0;
-    while(i < strlen(text)){
-        sprintf(current,"%c",text[i]);
-        next = text[i+1];
-
-        // Has not reached the end of the sequence table
-        while(get_seq_code(dict,current) != NOT_EXIST){
-            sprintf(current,"%s%c",current,next);
-            i++;
-            next = text[i+1];
+    while (what_bit_testing < length)
+    {
+        if (val & 0x80)
+        {
+            // printf("bit %d is 1\n", what_bit_testing);
+            fprintf(stderr, "1");
+        }
+        else
+        {
+            // printf("bit %d is 0\n", what_bit_testing);
+            fprintf(stderr, "0");
         }
 
-        current[strlen(current) - 1] = '\0';
-        next = text[i];
-        code = get_seq_code(dict,current);
-        sprintf(current,"%s%c",current,next);
-        insert_seq(dict,current);
-        printf("%d %s\n",code,current);
+        what_bit_testing++;
+        val = val << 1;
     }
-
+    fprintf(stderr, "\n");
 }
 
-/**
-  * @param codes : codes
-  * @param Dictionary* dict
-  */
-void lzw_decode(int codes[], int n,Dictionary* dict){
+void append_to_int8(int8_t *b, int append_value)
+{
+    if (append_value == 1)
+    {
+        *b = ~*b;
+        *b = *b << 1;
+        *b = ~*b;
+    }
+    else if (append_value == 0)
+    {
+        *b = *b << 1;
+    }
+}
+
+void append_to_int(int *b, int append_value)
+{
+    if (append_value == 1)
+    {
+        *b = ~*b;
+        *b = *b << 1;
+        *b = ~*b;
+    }
+    else if (append_value == 0)
+    {
+        *b = *b << 1;
+    }
+}
+
+int read12bits(int *remainder, bool *eight_four, bool *is_eof) // read 8 + 4
+{
     int code;
-    char prev[1000];
-    char* output;
+    if (*eight_four)
+    {
+        code = getchar();
 
-    code = codes[0];
-    output = get_code_seq(dict,code);
-    printf("%s", output);
+        if (code != EOF)
+            *remainder = getchar();
+        else
+            *is_eof = true;
 
-    int i;
-    for(i = 1; i < n; i ++){
-        code = codes[i];
-        strcpy(prev,output);
-        output = get_code_seq(dict, code);
-        sprintf(prev,"%s%c",prev,output[0]);
+        int what_bit_testing = 0;
+        while (what_bit_testing < 4)
+        {
+            if (*remainder & 0x80)
+            {
+                append_to_int(&code, 1);
+            }
+            else
+            {
+                append_to_int(&code, 0);
+            }
 
-        insert_seq(dict,prev);
+            what_bit_testing++;
+            *remainder = *remainder << 1;
+        }
+    }
+    else
+    {
+        code = 0;
+        int what_bit_testing = 0;
+        while (what_bit_testing < 4)
+        {
+            if (*remainder & 0x80)
+            {
+                append_to_int(&code, 1);
+            }
+            else
+            {
+                append_to_int(&code, 0);
+            }
 
-        printf("%s",output);
+            what_bit_testing++;
+            *remainder = *remainder << 1;
+        }
+        int new_byte = getchar();
+        if (new_byte == EOF)
+            *is_eof = true;
+        what_bit_testing = 0;
+        while (what_bit_testing < 8)
+        {
+            if (new_byte & 0x80)
+            {
+                append_to_int(&code, 1);
+            }
+            else
+            {
+                append_to_int(&code, 0);
+            }
+
+            what_bit_testing++;
+            new_byte = new_byte << 1;
+        }
     }
 
+    (*eight_four) = !(*eight_four);
+    return code;
 }
 
-/**
-  * @param file_content : the content of the file is read into a very large buffer
-  * returns the size of the the array
-  */
-  int read_codes(int* code_array){
-     
-    uint8_t* buffer = malloc(sizeof(uint8_t)*12); //each 12 bit code  
-
-    size_t index = 0; //keep track of how many code words are there
-    size_t ret;       //see if the read() has reach its end. 
-
-
-    
-    while(1){
-        // code_array = (int*) realloc(code_array, (sizeof(code_array) + sizeof(int)*1) );
-        code_array = (int*) realloc(code_array, index*12 + 1 );
-
-        // read 12 bits per time.
-        ret = read(STDIN_FILENO,buffer,12);
-        if(ret == 0)
-            break;
-
-        // converts the buffer into int
-        code_array[index] = binToInt(buffer);
-        ++index;
-        // printf("%d",binToInt(buffer));
-        
-    }
-    // The buffer ends.
-    code_array[index]='\0';
-
-    return index;
-}
-// int* read_codes(uint8_t* file_content){
-//     uint8_t* buffer;
-//     int code_buffer;
-//     size_t index = 0;
-//     size_t ret;
-
-//     int* code_array;
-
-//     // read 12 bits per time.
-//     while(1){
-//         file_content = realloc(file_content, sizeof(uint8_t)*(sizeof(file_content) + 12));
-//         ret = read(STDIN_FILENO,buffer,12);
-//         if(ret == 0)
-//             break;
-//         // printf("%c",buffer[0]);
-//         file_content[index] = (uint8_t)buffer[0];
-//         ++index;
-
-//         code_array[index] = binToInt(buffer);
-//     }
-//     // The buffer ends.
-//     file_content[index]='\0';
-
-
-//     return code_array;
-// }
-
-
-int main(){
-
-    //File content ( char array ) 
-    uint8_t* file_content = malloc(sizeof(uint8_t)*13);
-
-
-    int* code_array = malloc(sizeof(int)*10000);
-
-    int num_of_codes = read_codes(code_array);
-
+int main(int argc, char const *argv[])
+{
     Dictionary dict;
 
-    init_dictionary(&dict,1000);
+    ih_parse_args(argc, argv);
+
+    // initialize dictionary
+    init_dictionary(&dict);
+
+    // intitialize sequence
     // print_dictionary(&dict);
-    
-//    #ifdef TEST_EXISTANCE
-//    //Checks if "B" exists.
-//    printf("%d\n",get_seq_code(&dict,"B"));
-//    #endif
 
+    int prev = 0, curr = 0;
+    int remainder = 0;
+    bool readmode = true;
+    bool iseof = false;
+    prev = read12bits(&remainder, &readmode, &iseof);
+    fprintf(stdout, "%s", get_seq_char(&dict, prev));
+    char * prevseq = malloc(sizeof(char) * MAX_SIZE + 1);
+    while (!iseof)
+    {
+        curr = read12bits(&remainder, &readmode, &iseof);
+        char * entry = get_seq_char(&dict, curr);
+        fprintf(stdout, "%s", entry);
+        char ch[2] = "\0";
+        ch[0] = entry[0];
+        strcpy(prevseq, get_seq_char(&dict, prev));
+        insert_seq(&dict, strcat(prevseq, ch));
+        prev = curr;
+    }
 
-    
-    lzw_decode(code_array,num_of_codes,&dict);
-
+    // print_dictionary(&dict);
 
     return 0;
 }

@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/decompress-lzw.dir/decompress-lzw.c.o -o decompress-lzw   -L/usr/local/lib 
+/usr/bin/cc CMakeFiles/decompress-lzw.dir/decompress-lzw.c.o -o decompress-lzw  liblib.a 

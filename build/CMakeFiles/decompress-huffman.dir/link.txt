@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/decompress-huffman.dir/decompress-huffman.c.o -o decompress-huffman 

@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/compress-rle.dir/compress-rle.c.o -o compress-rle 

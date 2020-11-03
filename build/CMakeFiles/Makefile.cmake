@@ -41,8 +41,11 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/huffman-decompress.dir/DependInfo.cmake"
-  "CMakeFiles/huffman-compress.dir/DependInfo.cmake"
+  "CMakeFiles/decompress-huffman.dir/DependInfo.cmake"
+  "CMakeFiles/compress-rle.dir/DependInfo.cmake"
+  "CMakeFiles/lib.dir/DependInfo.cmake"
+  "CMakeFiles/decompress-rle.dir/DependInfo.cmake"
   "CMakeFiles/compress-lzw.dir/DependInfo.cmake"
   "CMakeFiles/decompress-lzw.dir/DependInfo.cmake"
+  "CMakeFiles/compress-huffman.dir/DependInfo.cmake"
   )

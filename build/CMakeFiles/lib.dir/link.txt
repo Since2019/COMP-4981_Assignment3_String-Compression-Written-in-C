@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblib.a CMakeFiles/lib.dir/input_handler.c.o CMakeFiles/lib.dir/file_handler.c.o CMakeFiles/lib.dir/bit_array.c.o
+/usr/bin/ranlib liblib.a

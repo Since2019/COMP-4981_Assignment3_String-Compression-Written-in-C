@@ -72,10 +72,13 @@ CMAKE_BINARY_DIR = "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/C
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/huffman-decompress.dir/all
-all: CMakeFiles/huffman-compress.dir/all
+all: CMakeFiles/decompress-huffman.dir/all
+all: CMakeFiles/compress-rle.dir/all
+all: CMakeFiles/lib.dir/all
+all: CMakeFiles/decompress-rle.dir/all
 all: CMakeFiles/compress-lzw.dir/all
 all: CMakeFiles/decompress-lzw.dir/all
+all: CMakeFiles/compress-huffman.dir/all
 
 .PHONY : all
 
@@ -85,80 +88,137 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/huffman-decompress.dir/clean
-clean: CMakeFiles/huffman-compress.dir/clean
+clean: CMakeFiles/decompress-huffman.dir/clean
+clean: CMakeFiles/compress-rle.dir/clean
+clean: CMakeFiles/lib.dir/clean
+clean: CMakeFiles/decompress-rle.dir/clean
 clean: CMakeFiles/compress-lzw.dir/clean
 clean: CMakeFiles/decompress-lzw.dir/clean
+clean: CMakeFiles/compress-huffman.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/huffman-decompress.dir
+# Target rules for target CMakeFiles/decompress-huffman.dir
 
 # All Build rule for target.
-CMakeFiles/huffman-decompress.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-decompress.dir/build.make CMakeFiles/huffman-decompress.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-decompress.dir/build.make CMakeFiles/huffman-decompress.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=7,8 "Built target huffman-decompress"
-.PHONY : CMakeFiles/huffman-decompress.dir/all
+CMakeFiles/decompress-huffman.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-huffman.dir/build.make CMakeFiles/decompress-huffman.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-huffman.dir/build.make CMakeFiles/decompress-huffman.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=7,8 "Built target decompress-huffman"
+.PHONY : CMakeFiles/decompress-huffman.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/huffman-decompress.dir/rule: cmake_check_build_system
+CMakeFiles/decompress-huffman.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/huffman-decompress.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/decompress-huffman.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 0
-.PHONY : CMakeFiles/huffman-decompress.dir/rule
+.PHONY : CMakeFiles/decompress-huffman.dir/rule
 
 # Convenience name for target.
-huffman-decompress: CMakeFiles/huffman-decompress.dir/rule
+decompress-huffman: CMakeFiles/decompress-huffman.dir/rule
 
-.PHONY : huffman-decompress
+.PHONY : decompress-huffman
 
 # clean rule for target.
-CMakeFiles/huffman-decompress.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-decompress.dir/build.make CMakeFiles/huffman-decompress.dir/clean
-.PHONY : CMakeFiles/huffman-decompress.dir/clean
+CMakeFiles/decompress-huffman.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-huffman.dir/build.make CMakeFiles/decompress-huffman.dir/clean
+.PHONY : CMakeFiles/decompress-huffman.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/huffman-compress.dir
+# Target rules for target CMakeFiles/compress-rle.dir
 
 # All Build rule for target.
-CMakeFiles/huffman-compress.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-compress.dir/build.make CMakeFiles/huffman-compress.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-compress.dir/build.make CMakeFiles/huffman-compress.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=5,6 "Built target huffman-compress"
-.PHONY : CMakeFiles/huffman-compress.dir/all
+CMakeFiles/compress-rle.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-rle.dir/build.make CMakeFiles/compress-rle.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-rle.dir/build.make CMakeFiles/compress-rle.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=5,6 "Built target compress-rle"
+.PHONY : CMakeFiles/compress-rle.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/huffman-compress.dir/rule: cmake_check_build_system
+CMakeFiles/compress-rle.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/huffman-compress.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/compress-rle.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 0
-.PHONY : CMakeFiles/huffman-compress.dir/rule
+.PHONY : CMakeFiles/compress-rle.dir/rule
 
 # Convenience name for target.
-huffman-compress: CMakeFiles/huffman-compress.dir/rule
+compress-rle: CMakeFiles/compress-rle.dir/rule
 
-.PHONY : huffman-compress
+.PHONY : compress-rle
 
 # clean rule for target.
-CMakeFiles/huffman-compress.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-compress.dir/build.make CMakeFiles/huffman-compress.dir/clean
-.PHONY : CMakeFiles/huffman-compress.dir/clean
+CMakeFiles/compress-rle.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-rle.dir/build.make CMakeFiles/compress-rle.dir/clean
+.PHONY : CMakeFiles/compress-rle.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/lib.dir
+
+# All Build rule for target.
+CMakeFiles/lib.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=13,14,15,16 "Built target lib"
+.PHONY : CMakeFiles/lib.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/lib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/lib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 0
+.PHONY : CMakeFiles/lib.dir/rule
+
+# Convenience name for target.
+lib: CMakeFiles/lib.dir/rule
+
+.PHONY : lib
+
+# clean rule for target.
+CMakeFiles/lib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/clean
+.PHONY : CMakeFiles/lib.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/decompress-rle.dir
+
+# All Build rule for target.
+CMakeFiles/decompress-rle.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-rle.dir/build.make CMakeFiles/decompress-rle.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-rle.dir/build.make CMakeFiles/decompress-rle.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=11,12 "Built target decompress-rle"
+.PHONY : CMakeFiles/decompress-rle.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/decompress-rle.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/decompress-rle.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 0
+.PHONY : CMakeFiles/decompress-rle.dir/rule
+
+# Convenience name for target.
+decompress-rle: CMakeFiles/decompress-rle.dir/rule
+
+.PHONY : decompress-rle
+
+# clean rule for target.
+CMakeFiles/decompress-rle.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-rle.dir/build.make CMakeFiles/decompress-rle.dir/clean
+.PHONY : CMakeFiles/decompress-rle.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/compress-lzw.dir
 
 # All Build rule for target.
-CMakeFiles/compress-lzw.dir/all:
+CMakeFiles/compress-lzw.dir/all: CMakeFiles/lib.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-lzw.dir/build.make CMakeFiles/compress-lzw.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-lzw.dir/build.make CMakeFiles/compress-lzw.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=1,2 "Built target compress-lzw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=3,4 "Built target compress-lzw"
 .PHONY : CMakeFiles/compress-lzw.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/compress-lzw.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/compress-lzw.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 0
 .PHONY : CMakeFiles/compress-lzw.dir/rule
@@ -177,15 +237,15 @@ CMakeFiles/compress-lzw.dir/clean:
 # Target rules for target CMakeFiles/decompress-lzw.dir
 
 # All Build rule for target.
-CMakeFiles/decompress-lzw.dir/all:
+CMakeFiles/decompress-lzw.dir/all: CMakeFiles/lib.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-lzw.dir/build.make CMakeFiles/decompress-lzw.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-lzw.dir/build.make CMakeFiles/decompress-lzw.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=3,4 "Built target decompress-lzw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=9,10 "Built target decompress-lzw"
 .PHONY : CMakeFiles/decompress-lzw.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/decompress-lzw.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/decompress-lzw.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 0
 .PHONY : CMakeFiles/decompress-lzw.dir/rule
@@ -199,6 +259,33 @@ decompress-lzw: CMakeFiles/decompress-lzw.dir/rule
 CMakeFiles/decompress-lzw.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-lzw.dir/build.make CMakeFiles/decompress-lzw.dir/clean
 .PHONY : CMakeFiles/decompress-lzw.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/compress-huffman.dir
+
+# All Build rule for target.
+CMakeFiles/compress-huffman.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-huffman.dir/build.make CMakeFiles/compress-huffman.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-huffman.dir/build.make CMakeFiles/compress-huffman.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=1,2 "Built target compress-huffman"
+.PHONY : CMakeFiles/compress-huffman.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/compress-huffman.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/compress-huffman.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" 0
+.PHONY : CMakeFiles/compress-huffman.dir/rule
+
+# Convenience name for target.
+compress-huffman: CMakeFiles/compress-huffman.dir/rule
+
+.PHONY : compress-huffman
+
+# clean rule for target.
+CMakeFiles/compress-huffman.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-huffman.dir/build.make CMakeFiles/compress-huffman.dir/clean
+.PHONY : CMakeFiles/compress-huffman.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

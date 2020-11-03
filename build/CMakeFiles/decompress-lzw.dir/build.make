@@ -98,6 +98,7 @@ decompress__lzw_EXTERNAL_OBJECTS =
 
 decompress-lzw: CMakeFiles/decompress-lzw.dir/decompress-lzw.c.o
 decompress-lzw: CMakeFiles/decompress-lzw.dir/build.make
+decompress-lzw: liblib.a
 decompress-lzw: CMakeFiles/decompress-lzw.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/judao/BCIT/NetWrokApp/Assignment3 String Compression/COMP-4981_Assignment3_String-Compression-Written-in-C/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable decompress-lzw"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/decompress-lzw.dir/link.txt --verbose=$(VERBOSE)

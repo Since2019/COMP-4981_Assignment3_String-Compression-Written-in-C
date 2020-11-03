@@ -130,30 +130,56 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named huffman-decompress
+# Target rules for targets named decompress-huffman
 
 # Build rule for target.
-huffman-decompress: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 huffman-decompress
-.PHONY : huffman-decompress
+decompress-huffman: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 decompress-huffman
+.PHONY : decompress-huffman
 
 # fast build rule for target.
-huffman-decompress/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-decompress.dir/build.make CMakeFiles/huffman-decompress.dir/build
-.PHONY : huffman-decompress/fast
+decompress-huffman/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-huffman.dir/build.make CMakeFiles/decompress-huffman.dir/build
+.PHONY : decompress-huffman/fast
 
 #=============================================================================
-# Target rules for targets named huffman-compress
+# Target rules for targets named compress-rle
 
 # Build rule for target.
-huffman-compress: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 huffman-compress
-.PHONY : huffman-compress
+compress-rle: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 compress-rle
+.PHONY : compress-rle
 
 # fast build rule for target.
-huffman-compress/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-compress.dir/build.make CMakeFiles/huffman-compress.dir/build
-.PHONY : huffman-compress/fast
+compress-rle/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-rle.dir/build.make CMakeFiles/compress-rle.dir/build
+.PHONY : compress-rle/fast
+
+#=============================================================================
+# Target rules for targets named lib
+
+# Build rule for target.
+lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib
+.PHONY : lib
+
+# fast build rule for target.
+lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/build
+.PHONY : lib/fast
+
+#=============================================================================
+# Target rules for targets named decompress-rle
+
+# Build rule for target.
+decompress-rle: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 decompress-rle
+.PHONY : decompress-rle
+
+# fast build rule for target.
+decompress-rle/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-rle.dir/build.make CMakeFiles/decompress-rle.dir/build
+.PHONY : decompress-rle/fast
 
 #=============================================================================
 # Target rules for targets named compress-lzw
@@ -180,6 +206,73 @@ decompress-lzw: cmake_check_build_system
 decompress-lzw/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-lzw.dir/build.make CMakeFiles/decompress-lzw.dir/build
 .PHONY : decompress-lzw/fast
+
+#=============================================================================
+# Target rules for targets named compress-huffman
+
+# Build rule for target.
+compress-huffman: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 compress-huffman
+.PHONY : compress-huffman
+
+# fast build rule for target.
+compress-huffman/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-huffman.dir/build.make CMakeFiles/compress-huffman.dir/build
+.PHONY : compress-huffman/fast
+
+bit_array.o: bit_array.c.o
+
+.PHONY : bit_array.o
+
+# target to build an object file
+bit_array.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/bit_array.c.o
+.PHONY : bit_array.c.o
+
+bit_array.i: bit_array.c.i
+
+.PHONY : bit_array.i
+
+# target to preprocess a source file
+bit_array.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/bit_array.c.i
+.PHONY : bit_array.c.i
+
+bit_array.s: bit_array.c.s
+
+.PHONY : bit_array.s
+
+# target to generate assembly for a file
+bit_array.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/bit_array.c.s
+.PHONY : bit_array.c.s
+
+compress-huffman.o: compress-huffman.c.o
+
+.PHONY : compress-huffman.o
+
+# target to build an object file
+compress-huffman.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-huffman.dir/build.make CMakeFiles/compress-huffman.dir/compress-huffman.c.o
+.PHONY : compress-huffman.c.o
+
+compress-huffman.i: compress-huffman.c.i
+
+.PHONY : compress-huffman.i
+
+# target to preprocess a source file
+compress-huffman.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-huffman.dir/build.make CMakeFiles/compress-huffman.dir/compress-huffman.c.i
+.PHONY : compress-huffman.c.i
+
+compress-huffman.s: compress-huffman.c.s
+
+.PHONY : compress-huffman.s
+
+# target to generate assembly for a file
+compress-huffman.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-huffman.dir/build.make CMakeFiles/compress-huffman.dir/compress-huffman.c.s
+.PHONY : compress-huffman.c.s
 
 compress-lzw.o: compress-lzw.c.o
 
@@ -208,6 +301,60 @@ compress-lzw.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-lzw.dir/build.make CMakeFiles/compress-lzw.dir/compress-lzw.c.s
 .PHONY : compress-lzw.c.s
 
+compress-rle.o: compress-rle.c.o
+
+.PHONY : compress-rle.o
+
+# target to build an object file
+compress-rle.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-rle.dir/build.make CMakeFiles/compress-rle.dir/compress-rle.c.o
+.PHONY : compress-rle.c.o
+
+compress-rle.i: compress-rle.c.i
+
+.PHONY : compress-rle.i
+
+# target to preprocess a source file
+compress-rle.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-rle.dir/build.make CMakeFiles/compress-rle.dir/compress-rle.c.i
+.PHONY : compress-rle.c.i
+
+compress-rle.s: compress-rle.c.s
+
+.PHONY : compress-rle.s
+
+# target to generate assembly for a file
+compress-rle.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/compress-rle.dir/build.make CMakeFiles/compress-rle.dir/compress-rle.c.s
+.PHONY : compress-rle.c.s
+
+decompress-huffman.o: decompress-huffman.c.o
+
+.PHONY : decompress-huffman.o
+
+# target to build an object file
+decompress-huffman.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-huffman.dir/build.make CMakeFiles/decompress-huffman.dir/decompress-huffman.c.o
+.PHONY : decompress-huffman.c.o
+
+decompress-huffman.i: decompress-huffman.c.i
+
+.PHONY : decompress-huffman.i
+
+# target to preprocess a source file
+decompress-huffman.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-huffman.dir/build.make CMakeFiles/decompress-huffman.dir/decompress-huffman.c.i
+.PHONY : decompress-huffman.c.i
+
+decompress-huffman.s: decompress-huffman.c.s
+
+.PHONY : decompress-huffman.s
+
+# target to generate assembly for a file
+decompress-huffman.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-huffman.dir/build.make CMakeFiles/decompress-huffman.dir/decompress-huffman.c.s
+.PHONY : decompress-huffman.c.s
+
 decompress-lzw.o: decompress-lzw.c.o
 
 .PHONY : decompress-lzw.o
@@ -235,59 +382,86 @@ decompress-lzw.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-lzw.dir/build.make CMakeFiles/decompress-lzw.dir/decompress-lzw.c.s
 .PHONY : decompress-lzw.c.s
 
-huffman-compress.o: huffman-compress.c.o
+decompress-rle.o: decompress-rle.c.o
 
-.PHONY : huffman-compress.o
-
-# target to build an object file
-huffman-compress.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-compress.dir/build.make CMakeFiles/huffman-compress.dir/huffman-compress.c.o
-.PHONY : huffman-compress.c.o
-
-huffman-compress.i: huffman-compress.c.i
-
-.PHONY : huffman-compress.i
-
-# target to preprocess a source file
-huffman-compress.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-compress.dir/build.make CMakeFiles/huffman-compress.dir/huffman-compress.c.i
-.PHONY : huffman-compress.c.i
-
-huffman-compress.s: huffman-compress.c.s
-
-.PHONY : huffman-compress.s
-
-# target to generate assembly for a file
-huffman-compress.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-compress.dir/build.make CMakeFiles/huffman-compress.dir/huffman-compress.c.s
-.PHONY : huffman-compress.c.s
-
-huffman-decompress.o: huffman-decompress.c.o
-
-.PHONY : huffman-decompress.o
+.PHONY : decompress-rle.o
 
 # target to build an object file
-huffman-decompress.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-decompress.dir/build.make CMakeFiles/huffman-decompress.dir/huffman-decompress.c.o
-.PHONY : huffman-decompress.c.o
+decompress-rle.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-rle.dir/build.make CMakeFiles/decompress-rle.dir/decompress-rle.c.o
+.PHONY : decompress-rle.c.o
 
-huffman-decompress.i: huffman-decompress.c.i
+decompress-rle.i: decompress-rle.c.i
 
-.PHONY : huffman-decompress.i
+.PHONY : decompress-rle.i
 
 # target to preprocess a source file
-huffman-decompress.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-decompress.dir/build.make CMakeFiles/huffman-decompress.dir/huffman-decompress.c.i
-.PHONY : huffman-decompress.c.i
+decompress-rle.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-rle.dir/build.make CMakeFiles/decompress-rle.dir/decompress-rle.c.i
+.PHONY : decompress-rle.c.i
 
-huffman-decompress.s: huffman-decompress.c.s
+decompress-rle.s: decompress-rle.c.s
 
-.PHONY : huffman-decompress.s
+.PHONY : decompress-rle.s
 
 # target to generate assembly for a file
-huffman-decompress.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/huffman-decompress.dir/build.make CMakeFiles/huffman-decompress.dir/huffman-decompress.c.s
-.PHONY : huffman-decompress.c.s
+decompress-rle.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/decompress-rle.dir/build.make CMakeFiles/decompress-rle.dir/decompress-rle.c.s
+.PHONY : decompress-rle.c.s
+
+file_handler.o: file_handler.c.o
+
+.PHONY : file_handler.o
+
+# target to build an object file
+file_handler.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/file_handler.c.o
+.PHONY : file_handler.c.o
+
+file_handler.i: file_handler.c.i
+
+.PHONY : file_handler.i
+
+# target to preprocess a source file
+file_handler.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/file_handler.c.i
+.PHONY : file_handler.c.i
+
+file_handler.s: file_handler.c.s
+
+.PHONY : file_handler.s
+
+# target to generate assembly for a file
+file_handler.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/file_handler.c.s
+.PHONY : file_handler.c.s
+
+input_handler.o: input_handler.c.o
+
+.PHONY : input_handler.o
+
+# target to build an object file
+input_handler.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/input_handler.c.o
+.PHONY : input_handler.c.o
+
+input_handler.i: input_handler.c.i
+
+.PHONY : input_handler.i
+
+# target to preprocess a source file
+input_handler.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/input_handler.c.i
+.PHONY : input_handler.c.i
+
+input_handler.s: input_handler.c.s
+
+.PHONY : input_handler.s
+
+# target to generate assembly for a file
+input_handler.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/input_handler.c.s
+.PHONY : input_handler.c.s
 
 # Help Target
 help:
@@ -297,22 +471,40 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... compress-huffman"
 	@echo "... compress-lzw"
+	@echo "... compress-rle"
+	@echo "... decompress-huffman"
 	@echo "... decompress-lzw"
-	@echo "... huffman-compress"
-	@echo "... huffman-decompress"
+	@echo "... decompress-rle"
+	@echo "... lib"
+	@echo "... bit_array.o"
+	@echo "... bit_array.i"
+	@echo "... bit_array.s"
+	@echo "... compress-huffman.o"
+	@echo "... compress-huffman.i"
+	@echo "... compress-huffman.s"
 	@echo "... compress-lzw.o"
 	@echo "... compress-lzw.i"
 	@echo "... compress-lzw.s"
+	@echo "... compress-rle.o"
+	@echo "... compress-rle.i"
+	@echo "... compress-rle.s"
+	@echo "... decompress-huffman.o"
+	@echo "... decompress-huffman.i"
+	@echo "... decompress-huffman.s"
 	@echo "... decompress-lzw.o"
 	@echo "... decompress-lzw.i"
 	@echo "... decompress-lzw.s"
-	@echo "... huffman-compress.o"
-	@echo "... huffman-compress.i"
-	@echo "... huffman-compress.s"
-	@echo "... huffman-decompress.o"
-	@echo "... huffman-decompress.i"
-	@echo "... huffman-decompress.s"
+	@echo "... decompress-rle.o"
+	@echo "... decompress-rle.i"
+	@echo "... decompress-rle.s"
+	@echo "... file_handler.o"
+	@echo "... file_handler.i"
+	@echo "... file_handler.s"
+	@echo "... input_handler.o"
+	@echo "... input_handler.i"
+	@echo "... input_handler.s"
 .PHONY : help
 
 

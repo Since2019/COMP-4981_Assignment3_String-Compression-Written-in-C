@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
-
+#include <unistd.h>
+#include <fcntl.h> 
 #include "hufmanTree.h"
 
 /**
@@ -50,25 +51,6 @@ void destoryCode(uint8_t *hufCode) {
 	free(hufCode);
 }
 
-/**
-  *  @param : the string you want to code
-  *  @param : u
-  */
-uint8_t *coding(uint8_t *str, uint32_t *orientate, uint32_t characterCount, HUFMAN_TREE_NODE *hufmanTreeNode) {
-	uint8_t *code = NULL;
-	uint32_t i;
-	uint32_t sum = 0;
-
-	for (i = 0; i < characterCount; i++) {
-		sum += hufmanTreeNode[i].attribute.frequency * strlen(hufmanTreeNode[i].hufmanCode);
-	}
-	code = (uint8_t *) calloc(sizeof(uint8_t), sum);
-
-	for (i = 0; str[i]; i++) {
-		strcat(code, hufmanTreeNode[orientate[str[i]]].hufmanCode);
-	}
-	return code;
-}
 
 /**
   * @param code : The code array
@@ -215,6 +197,50 @@ ATTRIBUTE *initAttributeList(uint8_t *str, uint32_t *ascii, uint32_t *characterC
 	return attributeList;
 }
 
+
+
+
+
+  // read 8 bits a time 
+  int read_input_bytes(uint8_t* byte_content){
+     
+    uint8_t* buffer = malloc(sizeof(uint8_t)*2); //each 12 bit code  
+	
+
+    size_t index = 0; //keep track of how many code words are there
+    size_t ret;       //see if the read() has reach its end. 
+
+
+   
+    while(1){
+		
+        byte_content = (uint8_t*) realloc(byte_content, (index*1 + 3)*sizeof(uint8_t) );
+		
+
+        // read 8 bits(one byte) per time.
+        ret = read(STDIN_FILENO,buffer,1);
+        if(ret == 0)
+            break;
+
+        // put the read stuff into the byte_content.
+        byte_content[index] = buffer[0];
+		// fprintf(stderr,"%c",buffer[0]);
+        ++index;
+        
+    }
+    // The buffer ends.
+    byte_content[index]='\0';
+
+    return index;
+}
+
+
+
+
+
+
+
+
 int main() {
 	uint8_t str[128];
 	uint8_t code[256];
@@ -226,13 +252,15 @@ int main() {
 	ATTRIBUTE *attributeList = NULL;
 	HUFMAN_TREE_NODE *hufmanTreeNode = NULL;
 
-
+	//Now you need to put this as the byte_array.
+	uint8_t* input_bytes_content = malloc(sizeof(uint8_t)*10);;
+	read_input_bytes(input_bytes_content);
 
 	
-	printf("Your input, please:\n");
-	fgets(str,128,stdin); //Encoding part
+	fprintf(stderr,"The system reads from file:\n");
+	// fgets(str,128,stdin); //Encoding part
 
-	attributeList = initAttributeList(str, ascii, &characterCount);
+	attributeList = initAttributeList(input_bytes_content, ascii, &characterCount);
 	showAttributeList(characterCount, attributeList);
 	
 	hufmanTreeNode = initHufmanTreeNode(characterCount, orientate, attributeList);
@@ -246,7 +274,7 @@ int main() {
 	// 
 	// 
 	// 
-	hufCode = coding(str, orientate, characterCount, hufmanTreeNode); // Encoding:
+	//hufCode = coding(str, orientate, characterCount, hufmanTreeNode); // Encoding:
 
 
 	//Decoding:
